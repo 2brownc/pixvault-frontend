@@ -14,12 +14,12 @@ function requiredTags(strings: string[], limit: number): string[] {
   return uniqueStrings.slice(0, limit)
 }
 
-const RoundedSpan = ({ text }: { text: string }) => {
+const BadgeLink = ({ text }: { text: string }) => {
   return (
     <Link
       to={getImagesByTag(text)}
       target="_blank"
-      className={styles.roundedSpan}
+      className={styles.badgeLink}
     >{`${text}`}</Link>
   )
 }
@@ -28,7 +28,7 @@ export function ImageTags({ tags, limit }: { tags: string[]; limit: number }) {
   return (
     <>
       {requiredTags(tags, limit).map(tag => (
-        <RoundedSpan text={tag} key={tag} />
+        <BadgeLink text={tag} key={tag} />
       ))}
     </>
   )

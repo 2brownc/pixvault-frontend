@@ -1,4 +1,4 @@
-.roundedSpan {
+.badgeLink {
   display: inline-block; /* Ensure consistent block-like behavior */
   text-decoration: none;
   color: inherit;
@@ -10,7 +10,7 @@
   transition: background-color 0.2s ease-in-out; /* Smooth transition */
 }
 
-.roundedSpan:hover {
+.badgeLink:hover {
   background-color: #bde0ff;
   cursor: pointer; 
 }
