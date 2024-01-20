@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styles from "./ImageTags.module.css"
 
-const getImagesByTag = (tag: string) => `/search/tag/${tag}/`
+const imagesByTagLink = (tag: string) => `/search/tag/${tag}/`
 
 function requiredTags(strings: string[], limit: number): string[] {
   // Filter out strings containing numbers using a regular expression:
@@ -17,7 +17,7 @@ function requiredTags(strings: string[], limit: number): string[] {
 const BadgeLink = ({ text }: { text: string }) => {
   return (
     <Link
-      to={getImagesByTag(text)}
+      to={imagesByTagLink(text)}
       target="_blank"
       className={styles.badgeLink}
     >{`${text}`}</Link>
