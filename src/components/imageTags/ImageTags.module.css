@@ -1,0 +1,16 @@
+.roundedSpan {
+  display: inline-block; /* Ensure consistent block-like behavior */
+  text-decoration: none;
+  color: inherit;
+  font-weight: lighter;
+  margin: 0;
+  padding: 1px 5px; /* Adjust padding as needed */
+  border-radius: 5px; /* Slightly rounded edges */
+  background-color: #f0f8ff;
+  transition: background-color 0.2s ease-in-out; /* Smooth transition */
+}
+
+.roundedSpan:hover {
+  background-color: #bde0ff;
+  cursor: pointer; 
+}

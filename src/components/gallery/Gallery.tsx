@@ -1,0 +1,38 @@
+import { Group, Card, Image, Pill } from "@mantine/core"
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+import { ImageTags } from "../imageTags/ImageTags"
+import type { Image as ImageType } from "../../types"
+
+type ImageGalleryPropsType = {
+  images: ImageType[]
+}
+
+export default function ImageGallery({ images }: ImageGalleryPropsType) {
+  console.log("IMAGES: ", images)
+  return (
+    <div style={{ margin: "2rem" }}>
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 350: 1, 450: 2, 800: 3, 900: 4 }}
+      >
+        <Masonry gutter="10px">
+          {images.map(image => (
+            <Card
+              key={image.id}
+              shadow="sm"
+              padding="sm"
+              radius="md"
+              withBorder
+            >
+              <Card.Section>
+                <Image src={image.thumbnail} alt={image.url} />
+              </Card.Section>
+              <Group style={{ marginTop: "10px" }}>
+                <ImageTags tags={image.tags} limit={4} />
+              </Group>
+            </Card>
+          ))}
+        </Masonry>
+      </ResponsiveMasonry>
+    </div>
+  )
+}
