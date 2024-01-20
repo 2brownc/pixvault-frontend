@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 
 import router from "./router"
 import Header from "./components/header/Header"
+import Footer from "./components/footer/Footer"
 
 const App = () => {
   const { isLoading, error } = useAuth0()
@@ -23,6 +24,7 @@ const App = () => {
       <div>
         <RouterProvider router={router} />
       </div>
+      <Footer />
     </>
   )
 }
