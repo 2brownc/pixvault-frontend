@@ -3,9 +3,10 @@ import { getImages } from "../../utils/getImages"
 import { useState, useEffect } from "react"
 import Gallery from "../../components/gallery/Gallery"
 import SearchBox from "../../components/searchBox/SearchBox"
-import { Stack, Space, Text } from "@mantine/core"
+import { Stack, Space, Text, Group, Flex } from "@mantine/core"
 import type { Image } from "../../types"
 import styles from "./Search.module.css"
+import { TagBox } from "../../components/tagbox/TagBox"
 
 export default function Search() {
   const { keyword, tag } = useParams()
@@ -52,6 +53,9 @@ export default function Search() {
           <Text size="3rem">results for {`${keyword || tag}`}</Text>
         </Stack>
       </div>
+      <Flex justify="center" align="center" wrap="wrap" gap="sm">
+        <TagBox images={images} />
+      </Flex>
       <div>{images ? <Gallery images={images} /> : <div>loading</div>}</div>
     </Stack>
   )
