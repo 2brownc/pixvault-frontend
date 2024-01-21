@@ -5,16 +5,7 @@ import classes from "./Header.module.css"
 
 const links = [
   { link: "/", label: "Home" },
-  { link: "/search", label: "Search" },
-  {
-    link: "#1",
-    label: "Profile",
-    links: [
-      { link: "/favorites", label: "Favorites" },
-      { link: "/history", label: "History" },
-      { link: "/logout", label: "Logout" },
-    ],
-  },
+  { link: "/search/keyword/sky", label: "Search" },
 ]
 
 export default function Header() {
@@ -34,11 +25,7 @@ export default function Header() {
           withinPortal
         >
           <Menu.Target>
-            <a
-              href={link.link}
-              className={classes.link}
-              onClick={event => event.preventDefault()}
-            >
+            <a href={link.link} className={classes.link}>
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
                 <IconChevronDown size="0.9rem" stroke={1.5} />
@@ -51,12 +38,7 @@ export default function Header() {
     }
 
     return (
-      <a
-        key={link.label}
-        href={link.link}
-        className={classes.link}
-        onClick={event => event.preventDefault()}
-      >
+      <a key={link.label} href={link.link} className={classes.link}>
         {link.label}
       </a>
     )
