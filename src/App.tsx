@@ -5,6 +5,8 @@ import router from "./router"
 import Header from "./components/header/Header"
 import Footer from "./components/footer/Footer"
 
+import styles from "./App.module.css"
+
 const App = () => {
   const { isLoading, error } = useAuth0()
 
@@ -21,7 +23,7 @@ const App = () => {
       <div>
         <Header />
       </div>
-      <div>
+      <div className={styles.main}>
         <RouterProvider router={router} />
       </div>
       <Footer />
