@@ -4,11 +4,8 @@ import { ImageTags } from "../imageTags/ImageTags"
 import { ImageItem } from "../imageItem/ImageItem"
 import type { Image as ImageType } from "../../types"
 
-type ImageGalleryPropsType = {
-  images: ImageType[]
-}
-
-export default function ImageGallery({ images }: ImageGalleryPropsType) {
+export default function ImageGallery({ images }: { images: ImageType[] }) {
+  console.log("gallery: ", images)
   return (
     <div style={{ margin: "2rem" }}>
       <ResponsiveMasonry

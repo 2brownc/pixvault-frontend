@@ -1,13 +1,10 @@
 import { useState } from "react"
 import { Input, Button, Flex } from "@mantine/core"
 import { IconSearch } from "@tabler/icons-react"
+import router from "../../router"
+import { navigateToKeywordSearch } from "../../utils/clickAction"
 
-interface SearchBoxProps {
-  placeholder: string
-  onSearch: (query: string) => void
-}
-
-export default function SearchBox({ placeholder, onSearch }: SearchBoxProps) {
+export default function SearchBox({ placeholder }: { placeholder: string }) {
   const [query, setQuery] = useState("")
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +12,7 @@ export default function SearchBox({ placeholder, onSearch }: SearchBoxProps) {
   }
 
   const handleSearchClick = () => {
-    onSearch(query)
+    router.navigate(navigateToKeywordSearch(query))
   }
 
   return (

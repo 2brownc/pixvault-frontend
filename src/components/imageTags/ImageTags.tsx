@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
+import { navigateToTagSearch } from "../../utils/clickAction"
 import styles from "./ImageTags.module.css"
-
-const imagesByTagLink = (tag: string) => `/search/tag/${tag}/`
 
 function requiredTags(strings: string[], limit: number): string[] {
   // Filter out strings containing numbers using a regular expression:
@@ -10,17 +9,15 @@ function requiredTags(strings: string[], limit: number): string[] {
   // Remove duplicates using a Set:
   const uniqueStrings = [...new Set(filteredStrings)]
 
-  // only return limit no. of items
+  // only return as per limit
   return uniqueStrings.slice(0, limit)
 }
 
 const BadgeLink = ({ text }: { text: string }) => {
   return (
-    <Link
-      to={imagesByTagLink(text)}
-      target="_blank"
-      className={styles.badgeLink}
-    >{`${text}`}</Link>
+    <Link to={navigateToTagSearch(text)} className={styles.badgeLink}>
+      {`${text}`}
+    </Link>
   )
 }
 

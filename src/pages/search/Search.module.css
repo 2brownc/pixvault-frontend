@@ -1,0 +1,13 @@
+.smokyPurpleGradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(204, 192, 224, 0.8) 0%,
+    rgba(176, 160, 200, 0.8) 100%
+  );
+}
+
+.searchBoxContainer {
+  width: auto;
+  height: auto;
+  padding: 20px;
+}

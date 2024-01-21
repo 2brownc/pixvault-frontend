@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
-import Home from "./Home"
-import Profile from "./Profile"
-import Search from "./Search"
+import Home from "./pages/home/Home"
+import Profile from "./pages/profile/Profile"
+import Search from "./pages/search/Search"
 
 const router = createBrowserRouter([
   {
@@ -13,7 +13,11 @@ const router = createBrowserRouter([
     element: <Profile />,
   },
   {
-    path: "search",
+    path: "search/keyword/:keyword",
+    element: <Search />,
+  },
+  {
+    path: "search/tag/:tag",
     element: <Search />,
   },
 ])
