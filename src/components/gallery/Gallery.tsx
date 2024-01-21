@@ -5,14 +5,15 @@ import { ImageItem } from "../imageItem/ImageItem"
 import type { Image as ImageType } from "../../types"
 
 export default function ImageGallery({ images }: { images: ImageType[] }) {
-  console.log("gallery: ", images)
+  // filter for normal images
+  const imagesFiltered = images.filter(image => !image.mature)
   return (
     <div style={{ margin: "2rem" }}>
       <ResponsiveMasonry
         columnsCountBreakPoints={{ 350: 1, 450: 2, 800: 3, 900: 4 }}
       >
         <Masonry gutter="10px">
-          {images.map(image => (
+          {imagesFiltered.map(image => (
             <Card
               key={image.id}
               shadow="sm"
