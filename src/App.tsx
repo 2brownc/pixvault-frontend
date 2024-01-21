@@ -7,6 +7,8 @@ import Footer from "./components/footer/Footer"
 
 import styles from "./App.module.css"
 
+import { LoadingOverlay, Box } from "@mantine/core"
+
 const App = () => {
   const { isLoading, error } = useAuth0()
 
@@ -15,7 +17,16 @@ const App = () => {
   }
 
   if (isLoading) {
-    return <div>LOADING</div>
+    return (
+      <Box pos="relative">
+        <LoadingOverlay
+          visible={true}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
+        {/* ...other content */}
+      </Box>
+    )
   }
 
   return (

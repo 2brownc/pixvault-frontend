@@ -7,6 +7,7 @@ import { Stack, Space, Text, Group, Flex } from "@mantine/core"
 import type { Image } from "../../types"
 import styles from "./Search.module.css"
 import { TagBox } from "../../components/tagbox/TagBox"
+import { Loading } from "../../components/loading/Loading"
 
 export default function Search() {
   const { keyword, tag } = useParams()
@@ -56,7 +57,7 @@ export default function Search() {
       <Flex justify="center" align="center" wrap="wrap" gap="sm">
         <TagBox images={images} />
       </Flex>
-      <div>{images ? <Gallery images={images} /> : <div>loading</div>}</div>
+      <div>{images ? <Gallery images={images} /> : <Loading />}</div>
     </Stack>
   )
 }
