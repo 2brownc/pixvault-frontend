@@ -5,6 +5,7 @@ import Hero from "../../components/hero/Hero"
 import SearchBox from "../../components/searchBox/SearchBox"
 import type { Image } from "../../types"
 import { getImages } from "../../utils/getImages"
+import { LoadingGallery } from "../../components/loading/LoadingGallery"
 
 export default function Home() {
   const [welcomeImages, setWelcomeImages] = useState<Image[] | null>(null)
@@ -24,7 +25,7 @@ export default function Home() {
       {welcomeImages ? (
         <Gallery images={welcomeImages} />
       ) : (
-        <div>Loading...</div>
+        <LoadingGallery items={20} />
       )}
     </Stack>
   )

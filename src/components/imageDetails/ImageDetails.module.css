@@ -1,0 +1,44 @@
+.modalContainer {
+  display: flex; /* Use flexbox for flexible layout */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.imageContainer {
+  width: 79vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageContainer img {
+  object-fit: contain;
+  max-width: 75vw;
+  max-height: 90vh;
+}
+
+.infoContainer {
+  width: 19vw;
+}
+
+/* Small screens */
+
+@media (max-width: 650px) {
+  .modalContainer {
+    flex-direction: column;
+  }
+
+  .imageContainer {
+    width: 95vw;
+  }
+
+  .imageContainer img {
+    max-width: 93vw;
+  }
+
+  .infoContainer {
+    width: 95vw;
+  }
+}
