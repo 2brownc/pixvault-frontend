@@ -6,6 +6,15 @@ import classes from "./Header.module.css"
 const links = [
   { link: "/", label: "Home" },
   { link: "/search/keyword/sky", label: "Search" },
+  {
+    link: "#2",
+    label: "",
+    links: [
+      { link: "/faq", label: "" },
+      { link: "/demo", label: "" },
+      { link: "/forums", label: "" },
+    ],
+  },
 ]
 
 export default function Header() {
