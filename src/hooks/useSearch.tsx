@@ -3,8 +3,8 @@ import type { Image } from "../types"
 import { getImages } from "../utils/getImages"
 
 type useSearchProps = {
-  keyword: string | undefined
-  tag: string | undefined
+  keyword?: string | undefined
+  tag?: string | undefined
   pages: number
 }
 
