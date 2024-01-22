@@ -1,48 +1,21 @@
 import { useParams } from "react-router-dom"
-import { getImages } from "../../utils/getImages"
-import { useState, useEffect } from "react"
 import Gallery from "../../components/gallery/Gallery"
 import SearchBox from "../../components/searchBox/SearchBox"
-import { Stack, Space, Text, Group, Flex } from "@mantine/core"
-import type { Image } from "../../types"
+import { Stack, Space, Text, Flex } from "@mantine/core"
 import styles from "./Search.module.css"
 import { TagBox } from "../../components/tagbox/TagBox"
 import Loading from "../../components/loading/Loading"
+import { useSearch } from "../../hooks/useSearch"
 
 export default function Search() {
   const { keyword, tag } = useParams()
-  const [images, setImages] = useState<Image[] | null>(null)
   // openverse api only supports 1 >= page <= 20
-  const [page, setPage] = useState<number>(1)
-  const [currentSearch, setCurrentSearch] = useState<string | null>(null)
 
-  // get images based on the search type
-  useEffect(() => {
-    setImages(null)
-    let uri: string | null = null
-    if (keyword) {
-      uri = `${import.meta.env.VITE_SERVER_URL}/search/keyword/${keyword}`
-      setCurrentSearch(uri)
-    } else if (tag) {
-      uri = `${import.meta.env.VITE_SERVER_URL}/search/tag/${tag}`
-      setCurrentSearch(uri)
-    }
-  }, [keyword, tag])
-
-  // get images when infinite scrolling
-  useEffect(() => {
-    if (currentSearch) {
-      getImages(`${currentSearch}/${page}`).then(data =>
-        setImages((oldData: Image[] | any) => {
-          if (oldData) {
-            return oldData.concat(data)
-          } else {
-            return data
-          }
-        }),
-      )
-    }
-  }, [page, currentSearch])
+  const { images, setPage, loading, error } = useSearch({
+    keyword,
+    tag,
+    pages: 1,
+  })
 
   return (
     <Stack>
@@ -58,7 +31,16 @@ export default function Search() {
         <TagBox images={images} />
       </Flex>
       <div>
-        {images ? <Gallery images={images} /> : <Loading width="90vw" />}
+        {loading ? (
+          <Loading width="90vw" />
+        ) : (
+          images && <Gallery images={images} />
+        )}
+        {error && (
+          <Flex justify="center" align="center">
+            <div>No Images Found</div>
+          </Flex>
+        )}
       </div>
     </Stack>
   )
