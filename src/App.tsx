@@ -2,10 +2,6 @@ import { RouterProvider } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
 
 import router from "./router"
-import Header from "./components/header/Header"
-import Footer from "./components/footer/Footer"
-
-import styles from "./App.module.css"
 
 import { LoadingOverlay, Box } from "@mantine/core"
 
@@ -30,15 +26,9 @@ const App = () => {
   }
 
   return (
-    <>
-      <div>
-        <Header />
-      </div>
-      <div className={styles.main}>
-        <RouterProvider router={router} />
-      </div>
-      <Footer />
-    </>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   )
 }
 
