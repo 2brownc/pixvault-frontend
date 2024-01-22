@@ -51,7 +51,9 @@ export default function Search() {
         )}
         {loading && <Loading width="100%" />}
       </div>
-      <div ref={sentryRef}></div>
+      <div ref={sentryRef}>
+        {/* New images will be loaded when this div enters the screen*/}
+      </div>
     </Stack>
   )
 }
