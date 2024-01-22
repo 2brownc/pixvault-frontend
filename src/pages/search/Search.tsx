@@ -11,7 +11,7 @@ import useInfiniteScroll from "react-infinite-scroll-hook"
 export default function Search() {
   const { keyword, tag } = useParams()
   const { images, loadNextPage, hasNextPage, loading, error } = useSearch({
-    keyword: keyword || "weather",
+    keyword: keyword || import.meta.env.VITE_DEFAULT_SEARCHTERM,
     tag,
     pages: 1,
   })

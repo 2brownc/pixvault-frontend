@@ -7,7 +7,10 @@ import { NavMenu } from "../navmenu/NavMenu"
 
 const links = [
   { link: "/", label: "Home" },
-  { link: "/search/keyword/weather", label: "Search" },
+  {
+    link: `/search/keyword/${import.meta.env.VITE_DEFAULT_SEARCHTERM}`,
+    label: "Search",
+  },
   {
     link: "#1",
     label: "Profile",

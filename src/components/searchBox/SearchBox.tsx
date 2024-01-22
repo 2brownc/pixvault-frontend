@@ -12,7 +12,13 @@ export default function SearchBox({ placeholder }: { placeholder: string }) {
   }
 
   const handleSearchClick = () => {
-    router.navigate(navigateToKeywordSearch(query))
+    if (query === "") {
+      router.navigate(
+        navigateToKeywordSearch(import.meta.env.VITE_DEFAULT_SEARCHTERM),
+      )
+    } else {
+      router.navigate(navigateToKeywordSearch(query))
+    }
   }
 
   return (
