@@ -48,8 +48,8 @@ function ImageDetails({ image }: { image: ImageType }) {
               <Table.Td>License</Table.Td>
               <Table.Td>
                 <DetailLink
-                  detail={image.license}
-                  link={`${image.license_url} ${image.license_version}`}
+                  detail={`${image.license} ${image.license_version}`}
+                  link={image.license_url}
                 />
               </Table.Td>
             </Table.Tr>

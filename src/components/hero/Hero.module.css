@@ -2,7 +2,7 @@
   position: relative;
   padding-top: rem(180px);
   padding-bottom: rem(130px);
-  background-image: url(herobg.jpg);
+  background-image: url("/herobg.jpg");
   background-size: cover;
   background-position: center;
 
