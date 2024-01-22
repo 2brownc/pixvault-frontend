@@ -11,7 +11,7 @@ type useSearchProps = {
 type useSearchReturn = {
   loading: boolean
   loadNextPage: () => void
-  hasNextPage: () => boolean
+  hasNextPage: boolean
   images: Image[] | null
   error: boolean
 }
@@ -68,9 +68,7 @@ export function useSearch({
   }
 
   // openverse api only supports 1 >= page <= 20
-  const hasNextPage = () => {
-    return page <= 20
-  }
+  const hasNextPage = page < 20
 
   return { images, loadNextPage, hasNextPage, loading, error }
 }
