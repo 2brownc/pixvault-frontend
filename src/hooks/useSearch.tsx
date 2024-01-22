@@ -10,7 +10,8 @@ type useSearchProps = {
 
 type useSearchReturn = {
   loading: boolean
-  setPage: React.Dispatch<React.SetStateAction<number>>
+  loadNextPage: () => void
+  hasNextPage: () => boolean
   images: Image[] | null
   error: boolean
 }
@@ -62,5 +63,14 @@ export function useSearch({
     }
   }, [page, currentSearch])
 
-  return { images, setPage, loading, error }
+  const loadNextPage = () => {
+    setPage(page + 1)
+  }
+
+  // openverse api only supports 1 >= page <= 20
+  const hasNextPage = () => {
+    return page <= 20
+  }
+
+  return { images, loadNextPage, hasNextPage, loading, error }
 }

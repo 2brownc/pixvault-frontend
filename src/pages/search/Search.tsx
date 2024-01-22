@@ -9,9 +9,7 @@ import { useSearch } from "../../hooks/useSearch"
 
 export default function Search() {
   const { keyword, tag } = useParams()
-  // openverse api only supports 1 >= page <= 20
-
-  const { images, setPage, loading, error } = useSearch({
+  const { images, loadNextPage, hasNextPage, loading, error } = useSearch({
     keyword,
     tag,
     pages: 1,
