@@ -20,6 +20,7 @@ export function ImageItem({ image }: { image: ImageType }) {
           transition: "all 0.5s ease",
         }}
         onClick={open}
+        fit="contain"
       />
       <ImageDetailsModal image={image} opened={opened} close={close} />
     </>

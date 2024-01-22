@@ -1,0 +1,12 @@
+.imageContainer {
+  max-width: 7vw;
+  max-height: 7vh;
+  margin: 15px;
+}
+
+@media (max-width: 650px) {
+  .imageContainer {
+    max-width: 10vw;
+    max-height: 10vh;
+  }
+}

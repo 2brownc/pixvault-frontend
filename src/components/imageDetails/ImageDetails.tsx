@@ -1,5 +1,6 @@
-import { Modal, Button, Table, Space } from "@mantine/core"
+import { Modal, Button, Table, Space, Divider, Text } from "@mantine/core"
 import type { Image as ImageType } from "../../types"
+import { RelatedImages } from "./RelatedImages"
 import styles from "./ImageDetails.module.css"
 
 async function handleDownload(imageUrl: string, filename: string) {
@@ -17,7 +18,13 @@ async function handleDownload(imageUrl: string, filename: string) {
 }
 
 function DetailLink({ detail, link }: { detail: string; link: string }) {
-  return <a href={`${link}`} target="_blank" rel="noreferrer">{`${detail}`}</a>
+  return (
+    <a
+      href={`${link}`}
+      target="_blank"
+      rel="noreferrer"
+    >{`${detail.toUpperCase()}`}</a>
+  )
 }
 
 function ImageDetails({ image }: { image: ImageType }) {
@@ -64,6 +71,10 @@ function ImageDetails({ image }: { image: ImageType }) {
         >
           Download
         </Button>
+        <Divider my="md" />
+        <Text size="sm">Realted Images</Text>
+        <Space h="lg" />
+        <RelatedImages identifier={image.id} limit={6} />
       </div>
     </div>
   )
