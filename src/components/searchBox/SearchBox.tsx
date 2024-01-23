@@ -11,13 +11,20 @@ export default function SearchBox({ placeholder }: { placeholder: string }) {
     setQuery(event.target.value)
   }
 
-  const handleSearchClick = () => {
+  const handleSearch = () => {
     if (query === "") {
       router.navigate(
         navigateToKeywordSearch(import.meta.env.VITE_DEFAULT_SEARCHTERM),
       )
     } else {
       router.navigate(navigateToKeywordSearch(query))
+    }
+  }
+
+  const handleSearchEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      // Perform your action here
+      handleSearch()
     }
   }
 
@@ -36,9 +43,10 @@ export default function SearchBox({ placeholder }: { placeholder: string }) {
         size="lg"
         radius="sm"
         style={{ width: "70%" }}
+        onKeyDown={handleSearchEnter}
       />
       <Button
-        onClick={handleSearchClick}
+        onClick={handleSearch}
         size="lg"
         leftSection={<IconSearch size={18} />}
       >
