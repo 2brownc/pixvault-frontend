@@ -4,6 +4,7 @@ import {
   IconBrandYoutube,
   IconBrandInstagram,
 } from "@tabler/icons-react"
+import { Logo } from "../logo/Logo"
 import classes from "./Footer.module.css"
 
 export default function Footer() {
@@ -13,7 +14,9 @@ export default function Footer() {
       style={{ background: "linear-gradient(to bottom, #f5f8ff, #d0d9e9)" }}
     >
       <Container className={classes.inner}>
-        <div>Pix Vault</div>
+        <div className={classes.logo}>
+          <Logo />
+        </div>
         <Group
           gap={0}
           className={classes.links}

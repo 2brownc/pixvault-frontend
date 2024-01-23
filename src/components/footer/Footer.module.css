@@ -1,6 +1,7 @@
 .footer {
   margin-top: rem(120px);
-  border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+  border-top: rem(1px) solid
+    light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
 }
 
 .inner {
@@ -19,4 +20,8 @@
   @media (max-width: $mantine-breakpoint-xs) {
     margin-top: var(--mantine-spacing-md);
   }
+}
+
+.logo {
+  font-size: rem(40px);
 }

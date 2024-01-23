@@ -4,6 +4,8 @@ import { IconChevronDown } from "@tabler/icons-react"
 import classes from "./Header.module.css"
 import { Link } from "react-router-dom"
 import { NavMenu } from "../navmenu/NavMenu"
+import { useNavigate } from "react-router-dom"
+import { Logo } from "../logo/Logo"
 
 const links = [
   { link: "/", label: "Home" },
@@ -22,12 +24,19 @@ const links = [
 ]
 
 export default function Header() {
+  const navigate = useNavigate()
   const [opened, { toggle }] = useDisclosure(false)
+
+  const navigateTo = (path: string) => {
+    navigate(path)
+  }
 
   const items = links.map(link => {
     const menuItems = link.links?.map(item => (
       <Link to={item.link} key={item.link}>
-        <Menu.Item>{item.label}</Menu.Item>
+        <Menu.Item onClick={() => navigateTo(item.link)}>
+          {item.label}
+        </Menu.Item>
       </Link>
     ))
 
@@ -64,7 +73,11 @@ export default function Header() {
       <header className={classes.header}>
         <Container size="md">
           <div className={classes.inner}>
-            <div>PIX VAULT</div>
+            <div>
+              <Link to="/" className={classes.logo}>
+                <Logo />
+              </Link>
+            </div>
             <Group gap={5} visibleFrom="sm">
               {items}
             </Group>

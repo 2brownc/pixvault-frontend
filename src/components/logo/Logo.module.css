@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Oleo Script";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/OleoScript-Regular.ttf");
+}
+
+.logo {
+  font-family: "Oleo Script", system-ui;
+  text-decoration: none !important;
+}

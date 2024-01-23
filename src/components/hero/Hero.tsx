@@ -1,5 +1,6 @@
 import cx from "clsx"
 import { Title, Text, Container, Button, Overlay } from "@mantine/core"
+import { Logo } from "../../components/logo/Logo"
 import classes from "./Hero.module.css"
 
 export default function HeroImageBackground() {
@@ -8,7 +9,9 @@ export default function HeroImageBackground() {
       <Overlay color="#000" opacity={0.65} zIndex={1} />
 
       <div className={classes.inner}>
-        <Title className={classes.title}>PIX VAULT</Title>
+        <Title className={classes.title}>
+          <Logo size="48px" />
+        </Title>
 
         <Container size={640}>
           <Text size="lg" className={classes.description}>
