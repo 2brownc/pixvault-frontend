@@ -1,9 +1,8 @@
 import { RouterProvider } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
-
 import router from "./router"
-
 import { LoadingOverlay, Box } from "@mantine/core"
+import ScrollToTop from "./components/scrollToTop/ScrollToTop"
 
 const App = () => {
   const { isLoading, error } = useAuth0()
@@ -28,6 +27,7 @@ const App = () => {
   return (
     <div>
       <RouterProvider router={router} />
+      <ScrollToTop />
     </div>
   )
 }
