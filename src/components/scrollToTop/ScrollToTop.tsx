@@ -55,19 +55,14 @@ export default function ScrollToTop() {
   const [scroll, scrollTo] = useWindowScroll()
 
   return (
-    <>
-      <Text ta="center">
-        Affix is located at the bottom of the screen, scroll to see it
-      </Text>
-      <Affix position={{ bottom: 20, right: 20 }}>
-        <Transition transition="slide-up" mounted={scroll.y > 350}>
-          {transitionStyles => (
-            <Button style={transitionStyles} onClick={() => scrollTo({ y: 0 })}>
-              <IconArrowUp style={{ width: rem(16), height: rem(16) }} />
-            </Button>
-          )}
-        </Transition>
-      </Affix>
-    </>
+    <Affix position={{ bottom: 20, right: 20 }}>
+      <Transition transition="slide-up" mounted={scroll.y > 350}>
+        {transitionStyles => (
+          <Button style={transitionStyles} onClick={() => scrollTo({ y: 0 })}>
+            <IconArrowUp style={{ width: rem(16), height: rem(16) }} />
+          </Button>
+        )}
+      </Transition>
+    </Affix>
   )
 }
