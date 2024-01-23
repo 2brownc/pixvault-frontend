@@ -2,6 +2,7 @@ import cx from "clsx"
 import { Title, Text, Container, Button, Overlay } from "@mantine/core"
 import { Logo } from "../../components/logo/Logo"
 import classes from "./Hero.module.css"
+import { useNavigate } from "react-router-dom"
 
 export default function HeroImageBackground() {
   return (
@@ -10,7 +11,7 @@ export default function HeroImageBackground() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          <Logo size="48px" />
+          <Logo />
         </Title>
 
         <Container size={640}>
