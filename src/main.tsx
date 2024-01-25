@@ -10,13 +10,6 @@ import "./index.css"
 import { Auth0Provider } from "@auth0/auth0-react"
 import { authConfig } from "./authConfig"
 
-import router from "./router"
-
-const onRedirectCallback = (appState: any) => {
-  console.log("appstate", { appState })
-  router.navigate(appState?.returnTo || window.location.pathname)
-}
-
 const providerConfig = {
   domain: authConfig.domain,
   clientId: authConfig.clientId,
