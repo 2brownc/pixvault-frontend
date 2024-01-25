@@ -2,10 +2,11 @@ import { Menu, Group, Center, Burger, Container } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { IconChevronDown } from "@tabler/icons-react"
 import classes from "./Header.module.css"
-import { Link } from "react-router-dom"
 import { NavMenu } from "../navmenu/NavMenu"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useAuth0 } from "@auth0/auth0-react"
 import { Logo } from "../logo/Logo"
+import { isCurrentPage } from "../../utils/navigation"
 
 const links = [
   { link: "/", label: "Home" },
@@ -17,30 +18,52 @@ const links = [
     link: "#1",
     label: "Profile",
     links: [
+      { link: "/profile", label: "Profile" },
       { link: "/favorites", label: "Favorites" },
       { link: "/history", label: "History" },
+      { link: "", label: "Logout" },
     ],
   },
 ]
 
 export default function Header() {
+  const { isAuthenticated, logout } = useAuth0()
+  const { pathname } = useLocation()
   const navigate = useNavigate()
+
+  const logoutAction = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } })
+  }
+
   const [opened, { toggle }] = useDisclosure(false)
 
   const navigateTo = (path: string) => {
     navigate(path)
   }
 
+  const clickAction = (item: any) => {
+    if (item.label === "Logout") {
+      logoutAction()
+    } else {
+      navigateTo(item.link)
+    }
+  }
+
   const items = links.map(link => {
     const menuItems = link.links?.map(item => (
-      <Link to={item.link} key={item.link}>
-        <Menu.Item onClick={() => navigateTo(item.link)}>
-          {item.label}
-        </Menu.Item>
-      </Link>
+      <Menu.Item
+        key={item.link}
+        onClick={() => clickAction(item)}
+        data-active={isCurrentPage(item.link, pathname)}
+      >
+        {item.label}
+      </Menu.Item>
     ))
 
     if (menuItems) {
+      if (link.label === "Profile" && !isAuthenticated) {
+        return undefined
+      }
       return (
         <Menu
           key={link.label}
@@ -49,12 +72,16 @@ export default function Header() {
           withinPortal
         >
           <Menu.Target>
-            <a href={link.link} className={classes.link}>
+            <span
+              className={classes.link}
+              data-active={isCurrentPage(link.link, pathname)}
+              onClick={() => clickAction(link.link)}
+            >
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
                 <IconChevronDown size="0.9rem" stroke={1.5} />
               </Center>
-            </a>
+            </span>
           </Menu.Target>
           <Menu.Dropdown>{menuItems}</Menu.Dropdown>
         </Menu>
@@ -62,9 +89,14 @@ export default function Header() {
     }
 
     return (
-      <a key={link.label} href={link.link} className={classes.link}>
+      <span
+        key={link.label}
+        className={classes.link}
+        onClick={() => clickAction(link)}
+        data-active={isCurrentPage(link.link, pathname)}
+      >
         {link.label}
-      </a>
+      </span>
     )
   })
 
@@ -74,9 +106,9 @@ export default function Header() {
         <Container size="md">
           <div className={classes.inner}>
             <div>
-              <Link to="/" className={classes.logo}>
+              <span className={classes.logo} onClick={() => navigate("/")}>
                 <Logo />
-              </Link>
+              </span>
             </div>
             <Group gap={5} visibleFrom="sm">
               {items}
