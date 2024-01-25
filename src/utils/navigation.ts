@@ -1,5 +1,4 @@
 export function isCurrentPage(link: string, pathname: string) {
-  console.log("navi", { pathname })
   // if it's home page
   if (link === pathname) {
     return true
