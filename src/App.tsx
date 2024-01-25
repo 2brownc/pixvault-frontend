@@ -8,7 +8,8 @@ const App = () => {
   const { isLoading, error } = useAuth0()
 
   if (error) {
-    return <div>Oops... {error.message}</div>
+    console.log("Oops: Auth0 Error: ", { error })
+    return <div>Oops: Auth0 Error: {error.message}</div>
   }
 
   if (isLoading) {
@@ -19,7 +20,7 @@ const App = () => {
           zIndex={1000}
           overlayProps={{ radius: "sm", blur: 2 }}
         />
-        {/* ...other content */}
+        LOADING
       </Box>
     )
   }

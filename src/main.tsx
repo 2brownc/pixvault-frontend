@@ -6,28 +6,22 @@ import { Provider } from "react-redux"
 import App from "./App"
 import { store } from "./app/store"
 import "./index.css"
-import router from "./router"
 
 import { Auth0Provider } from "@auth0/auth0-react"
-import { getConfig } from "./config"
+import { authConfig } from "./authConfig"
+
+import router from "./router"
 
 const onRedirectCallback = (appState: any) => {
-  router.navigate(
-    appState && appState.returnTo
-      ? appState.returnTo
-      : window.location.pathname,
-  )
+  console.log("appstate", { appState })
+  router.navigate(appState?.returnTo || window.location.pathname)
 }
 
-const config = getConfig()
-
 const providerConfig = {
-  domain: config.domain,
-  clientId: config.clientId,
-  onRedirectCallback,
+  domain: authConfig.domain,
+  clientId: authConfig.clientId,
   authorizationParams: {
-    redirect_uri: window.location.origin,
-    ...(config.audience ? { audience: config.audience } : null),
+    redirect_uri: `${window.location.origin}/profile`,
   },
 }
 

@@ -1,8 +1,7 @@
-import cx from "clsx"
-import { Title, Text, Container, Button, Overlay } from "@mantine/core"
+import { Title, Text, Container, Overlay } from "@mantine/core"
 import { Logo } from "../../components/logo/Logo"
 import classes from "./Hero.module.css"
-import { useNavigate } from "react-router-dom"
+import { LoginInButton, SignUpButton } from "../../components/auth/Buttons"
 
 export default function HeroImageBackground() {
   return (
@@ -24,15 +23,12 @@ export default function HeroImageBackground() {
         </Container>
 
         <div className={classes.controls}>
-          <Button className={classes.control} variant="white" size="lg">
-            Sign Up
-          </Button>
-          <Button
-            className={cx(classes.control, classes.secondaryControl)}
-            size="lg"
-          >
-            Sign In
-          </Button>
+          <div className={classes.control}>
+            <LoginInButton />
+          </div>
+          <div className={classes.control}>
+            <SignUpButton />
+          </div>
         </div>
       </div>
     </div>
