@@ -15,6 +15,7 @@ const providerConfig = {
   clientId: authConfig.clientId,
   authorizationParams: {
     redirect_uri: `${window.location.origin}/profile`,
+    audience: authConfig.audience,
   },
 }
 
