@@ -1,11 +1,9 @@
 import { Flex } from "@mantine/core"
-import type { Image as ImageType } from "../../types"
-import { getImages } from "../../api/getImages"
 import { ImageItem } from "../imageItem/ImageItem"
-import { useState } from "react"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Loading from "../../components/loading/Loading"
 import type { SearchConfig } from "../../types"
+import { useSearch } from "../../hooks/useSearch"
 
 export function RelatedImages({
   identifier,
@@ -14,17 +12,9 @@ export function RelatedImages({
   identifier: string
   limit: number
 }) {
-  const [images, setImages] = useState<ImageType[] | null>(null)
-  const [error, setError] = useState<Error | null>(null)
-  const accessToken = import.meta.env.VITE_ANONAUTH_TOKEN
+  const searchConfig: SearchConfig = { identifier }
 
-  if (accessToken) {
-    const searchConfig: SearchConfig = { identifier }
-    const uri = `${import.meta.env.VITE_SERVER_URL}/search/related/`
-    getImages(uri, searchConfig, accessToken).then(setImages).catch(setError)
-  } else {
-    throw new Error("Anon Auth: access token not set.")
-  }
+  const { images, loading, error } = useSearch(searchConfig)
 
   if (error) {
     return (
@@ -34,7 +24,7 @@ export function RelatedImages({
     )
   }
 
-  if (!images) {
+  if (loading) {
     return (
       <Flex>
         <Loading width="100%" />
@@ -45,9 +35,8 @@ export function RelatedImages({
   return (
     <ResponsiveMasonry columnsCountBreakPoints={{ 200: 1, 300: 2, 400: 3 }}>
       <Masonry gutter="15px">
-        {images.slice(0, limit).map(image => (
-          <ImageItem image={image} />
-        ))}
+        {images &&
+          images.slice(0, limit).map(image => <ImageItem image={image} />)}
       </Masonry>
     </ResponsiveMasonry>
   )

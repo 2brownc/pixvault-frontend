@@ -6,7 +6,8 @@ import type { SearchConfig } from "../types"
 type useSearchProps = {
   keyword?: string | undefined
   tag?: string | undefined
-  pages: number
+  identifier?: string | undefined
+  pages?: number
 }
 
 type useSearchReturn = {
@@ -20,6 +21,7 @@ type useSearchReturn = {
 export function useSearch({
   keyword,
   tag,
+  identifier,
   pages,
 }: useSearchProps): useSearchReturn {
   const [loading, setLoading] = useState<boolean>(true)
@@ -28,6 +30,7 @@ export function useSearch({
   const [currentSearch, setCurrentSearch] = useState<string | null>(null)
   const [error, setError] = useState<boolean>(false)
   const [searchConfig, setSearchConfig] = useState<SearchConfig | null>(null)
+
   const accessToken = import.meta.env.VITE_ANONAUTH_TOKEN
 
   if (!accessToken) {
@@ -40,12 +43,14 @@ export function useSearch({
     let uri: string | null = null
     if (keyword) {
       uri = `${import.meta.env.VITE_SERVER_URL}/search/keyword/`
-      setCurrentSearch(uri)
     } else if (tag) {
       uri = `${import.meta.env.VITE_SERVER_URL}/search/tag/`
-      setCurrentSearch(uri)
+    } else if (identifier) {
+      uri = `${import.meta.env.VITE_SERVER_URL}/search/related/`
     }
-  }, [keyword, tag])
+
+    setCurrentSearch(uri)
+  }, [keyword, tag, identifier])
 
   useMemo(() => {
     let config = null
@@ -53,10 +58,12 @@ export function useSearch({
       config = { page, q: keyword }
     } else if (tag) {
       config = { page, tags: tag }
+    } else if (identifier) {
+      config = { identifier }
     }
 
     setSearchConfig(config)
-  }, [page, tag, keyword])
+  }, [page, tag, keyword, identifier])
 
   // get images when infinite scrolling
   useEffect(() => {
