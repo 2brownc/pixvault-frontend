@@ -6,8 +6,10 @@ export type Thumbs = {
   small: string
 }
 
+export type ImageId = string
+
 export type Image = {
-  id: string
+  id: ImageId
   title: string
   indexed_on: Date
   foreign_landing_url: string
@@ -27,6 +29,13 @@ export type Image = {
   mature: Boolean
   thumbnail: string
   related_url: string
+}
+
+export type ImageRecord = {
+  id: ImageId
+  title: string
+  thumbnail: string
+  timestamp: Date
 }
 
 export type AspectRatio = "squate" | "tall" | "wide"

@@ -1,0 +1,37 @@
+.tagGroup {
+  margin-top: "10px";
+}
+
+.imageContainer {
+  position: relative; /* Position the parent relative to its normal position */
+  display: flex;
+  flex-direction: column;
+}
+
+.imageButtons {
+  position: absolute; /* Position the details absolutely inside the container */
+  bottom: 0; /* Align to the bottom */
+  left: 0;
+  right: 0;
+
+  background-color: rgba(255, 255, 255, 0.9);
+
+  display: flex;
+  flex-direction: row-reverse;
+
+  padding-top: 5px;
+  padding-right: 5px;
+
+  transition: all 0.3s ease-in-out; /* Smooth animation */
+  opacity: 0;
+  z-index: -100;
+}
+
+.imageButtons > * {
+  margin: auto 5px;
+}
+
+.imageContainer:hover .imageButtons {
+  z-index: unset;
+  opacity: 1;
+}
