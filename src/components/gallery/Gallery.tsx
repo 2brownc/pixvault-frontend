@@ -11,9 +11,20 @@ import {
   IconShare3,
 } from "@tabler/icons-react"
 import type { ImageRecord } from "../../types"
+import { favButtonClick } from "../../utils/favButtonAction"
 import styles from "./Gallery.module.css"
+import { getImageRecord } from "../../utils/imageRecord"
 
-export default function ImageGallery({ images }: { images: ImageType[] }) {
+type ImageGalleryProps = {
+  images: ImageType[]
+  accessToken: string | null
+  userId: string | null
+}
+export default function ImageGallery({
+  images,
+  accessToken,
+  userId,
+}: ImageGalleryProps) {
   // filter for normal images
   const imagesFiltered = images.filter(image => !image.mature)
   // like button color
@@ -40,7 +51,11 @@ export default function ImageGallery({ images }: { images: ImageType[] }) {
                       <FavButton
                         before={<IconHeart />}
                         after={<IconHeartFilled />}
-                        action={() => {}}
+                        action={favButtonClick(
+                          accessToken,
+                          userId,
+                          getImageRecord(image),
+                        )}
                         color={favButtonColor}
                       />
                     </span>

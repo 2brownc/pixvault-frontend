@@ -1,10 +1,12 @@
 import { useState } from "react"
+import type { Dispatch, SetStateAction } from "react"
 import styles from "./FavButton.module.css"
+import type { ImageRecord } from "../../types"
 
 type AnimatedButtonProps = {
   before: JSX.Element
   after: JSX.Element
-  action: () => void
+  action: (setEnabled: Dispatch<SetStateAction<boolean>>) => void
   color: string
 }
 
@@ -16,8 +18,9 @@ export default function AnimatedButton({
 }: AnimatedButtonProps) {
   const [enabled, setEnabled] = useState<boolean>(false)
   const handleClick = () => {
-    setEnabled(enabled => !enabled)
-    action()
+    if (!enabled) {
+      action(setEnabled)
+    }
   }
   return (
     <span className={styles.btnGroup}>

@@ -7,8 +7,24 @@ import { TagBox } from "../../components/tagbox/TagBox"
 import Loading from "../../components/loading/Loading"
 import { useSearch } from "../../hooks/useSearch"
 import useInfiniteScroll from "react-infinite-scroll-hook"
+import { useState, useEffect } from "react"
+import { useAuth0 } from "@auth0/auth0-react"
 
 export default function Search() {
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0()
+  const [accessToken, setAccessToken] = useState<string | null>(null)
+  const [userId, setUserId] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getAccessTokenSilently().then(token => {
+        setAccessToken(token)
+      })
+
+      setUserId(user?.name || "")
+    }
+  }, [isAuthenticated, getAccessTokenSilently, user])
+
   const { keyword, tag } = useParams()
   const { images, loadNextPage, hasNextPage, loading, error } = useSearch({
     keyword: keyword || import.meta.env.VITE_DEFAULT_SEARCHTERM,
@@ -43,7 +59,9 @@ export default function Search() {
         <TagBox images={images} />
       </Flex>
       <div>
-        {images && <Gallery images={images} />}
+        {images && (
+          <Gallery images={images} userId={userId} accessToken={accessToken} />
+        )}
         {error && (
           <Flex justify="center" align="center">
             <div>No Images Found</div>

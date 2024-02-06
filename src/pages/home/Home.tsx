@@ -16,7 +16,7 @@ export default function Home() {
 
       <SearchBox placeholder="What are you looking for?" />
 
-      {images && <Gallery images={images} />}
+      {images && <Gallery images={images} userId={null} accessToken={null} />}
 
       {loading && <Loading width="90vw" />}
 
