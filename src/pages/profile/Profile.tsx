@@ -1,8 +1,28 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import Loading from "../../components/loading/Loading"
+import { getProfile } from "../../utils/user"
+import { useState, useEffect } from "react"
 
 export default function Profile() {
-  const { user, isAuthenticated, isLoading } = useAuth0()
+  const [userProfile, setUserProfile] = useState<any>()
+
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0()
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && user) {
+      const userId = user?.sub
+      if (userId !== undefined) {
+        getAccessTokenSilently().then(accessToken => {
+          getProfile(userId, accessToken).then(result => {
+            if (result !== null) {
+              setUserProfile(result)
+            }
+          })
+        })
+      }
+    }
+  }, [isLoading, isAuthenticated, user, getAccessTokenSilently])
 
   if (isLoading) {
     return <Loading width="auto" />
@@ -11,6 +31,7 @@ export default function Profile() {
   if (!isAuthenticated) {
     return <div>Not authenticated :(</div>
   }
+
   return (
     <div>
       Profile

@@ -19,7 +19,7 @@ export async function getImages(
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": `${import.meta.env.VITE_SERVER_CROSS_ORIGIN}`,
   }
 
   try {
