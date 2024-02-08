@@ -2,9 +2,10 @@ import { useAuth0 } from "@auth0/auth0-react"
 import Loading from "../../components/loading/Loading"
 import { getProfile } from "../../utils/user"
 import { useState, useEffect } from "react"
+import type { User as UserProfile } from "../../types"
 
 export default function Profile() {
-  const [userProfile, setUserProfile] = useState<any>()
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
 
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
     useAuth0()
