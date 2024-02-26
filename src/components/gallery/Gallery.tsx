@@ -16,7 +16,7 @@ import styles from "./Gallery.module.css"
 import { getImageRecord } from "../../utils/imageRecord"
 
 type ImageGalleryProps = {
-  images: ImageType[]
+  images: ImageType[] | null
   accessToken: string | null
   userId: string | null
 }
@@ -25,6 +25,26 @@ export default function ImageGallery({
   accessToken,
   userId,
 }: ImageGalleryProps) {
+  // if there are no images to display, return nothing
+  if (!images) {
+    return <></>
+  }
+
+  const prepareFavButton = (
+    accessToken: string,
+    userId: string,
+    image: ImageType,
+  ) => {
+    return (
+      <FavButton
+        before={<IconHeart />}
+        after={<IconHeartFilled />}
+        action={favButtonClick(accessToken, userId, getImageRecord(image))}
+        color={favButtonColor}
+      />
+    )
+  }
+
   // filter for normal images
   const imagesFiltered = images.filter(image => !image.mature)
   // like button color
@@ -48,16 +68,9 @@ export default function ImageGallery({
                   <ImageItem image={image} />
                   <div className={styles.imageButtons}>
                     <span className={styles.favButton}>
-                      <FavButton
-                        before={<IconHeart />}
-                        after={<IconHeartFilled />}
-                        action={favButtonClick(
-                          accessToken,
-                          userId,
-                          getImageRecord(image),
-                        )}
-                        color={favButtonColor}
-                      />
+                      {accessToken &&
+                        userId &&
+                        prepareFavButton(accessToken, userId, image)}
                     </span>
                     <span className={styles.seen}>
                       <IconHistory />

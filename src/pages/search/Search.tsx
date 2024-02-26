@@ -21,9 +21,11 @@ export default function Search() {
         setAccessToken(token)
       })
 
-      setUserId(user?.name || "")
+      setUserId(user?.sub || null)
+
+      console.log("userid, token", userId, accessToken)
     }
-  }, [isAuthenticated, getAccessTokenSilently, user])
+  }, [isAuthenticated, getAccessTokenSilently, user, userId, accessToken])
 
   const { keyword, tag } = useParams()
   const { images, loadNextPage, hasNextPage, loading, error } = useSearch({
@@ -59,13 +61,12 @@ export default function Search() {
         <TagBox images={images} />
       </Flex>
       <div>
-        {images && (
-          <Gallery images={images} userId={userId} accessToken={accessToken} />
-        )}
-        {error && (
+        {error ? (
           <Flex justify="center" align="center">
             <div>No Images Found</div>
           </Flex>
+        ) : (
+          <Gallery images={images} userId={userId} accessToken={accessToken} />
         )}
         {loading && <Loading width="100%" />}
       </div>
