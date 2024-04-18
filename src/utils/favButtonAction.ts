@@ -10,9 +10,6 @@ export function favButtonClick(
     enabled: boolean, // current state of button
     setEnabled: React.Dispatch<React.SetStateAction<boolean>>, // callback to update state
   ) => {
-    // log function inputs
-    console.log("fav image: ", accessToken, userId, imageRecord)
-
     // if user is logged in
     if (accessToken && userId) {
       // image is not currently favorited
@@ -24,12 +21,10 @@ export function favButtonClick(
         setFavorite(userId, imageRecord, accessToken).then(result => {
           // API call succeeded
           if (result) {
-            console.log("fav button clicked:", imageRecord)
             // API call failed
           } else {
             // revert UI update
             setEnabled(false)
-            console.log("fav button clicked but failed:", imageRecord)
           }
         })
 
@@ -42,22 +37,16 @@ export function favButtonClick(
         unsetFavorite(userId, imageRecord.id, accessToken).then(result => {
           // API call succeeded
           if (result) {
-            console.log("image unfaved :)", imageRecord)
             // API call failed
           } else {
             // revert UI update
             setEnabled(true)
-            console.log("image unfaved but failed:", imageRecord)
           }
         })
-
-        console.log("image unfaved :(", imageRecord)
       }
-
       // user not logged in
     } else {
       setEnabled(false)
-      console.log("you gotta login before you fav this:", imageRecord)
     }
   }
 }

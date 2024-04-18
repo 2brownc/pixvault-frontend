@@ -22,8 +22,6 @@ export default function Search() {
       })
 
       setUserId(user?.sub || null)
-
-      console.log("userid, token", userId, accessToken)
     }
   }, [isAuthenticated, getAccessTokenSilently, user, userId, accessToken])
 
