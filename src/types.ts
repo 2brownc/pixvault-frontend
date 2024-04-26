@@ -70,7 +70,21 @@ export type SearchConfig =
 // MONGODB
 
 export type User = {
-  name: string
-  history: string[]
-  favorites: string[]
+  name: string | null
+  _id?: string | null
+  history: ImageRecord[]
+  favorites: ImageRecord[]
+  accountLoading?: boolean
+  historyLoading?: boolean
+  favoritesLoading?: boolean
+}
+
+// APP STATE
+
+export type UpdateUser = { userId: string; accessToken: string }
+
+export type UpdateFavorites = {
+  userId: string
+  imageRecord: ImageRecord
+  accessToken: string
 }
