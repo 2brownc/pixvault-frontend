@@ -30,9 +30,14 @@ export async function updateUserMetadata(
   return response.data
 }
 
-export async function createUser(userId: string, accessToken: string) {
+export async function createUser(
+  userId: string,
+  userName: string,
+  accessToken: string,
+) {
   const body = {
-    user: userId,
+    userId: userId,
+    userName: userName,
   }
 
   const headers = {
@@ -43,14 +48,18 @@ export async function createUser(userId: string, accessToken: string) {
 
   const uri = `${import.meta.env.VITE_SERVER_URL}/createUser`
 
-  const response = await axios.post(uri, body, { headers })
+  try {
+    await axios.post(uri, body, { headers })
+  } catch (error) {
+    return false
+  }
 
-  return response.data
+  return true
 }
 
 export async function getUserProfile(userId: string, accessToken: string) {
   const body = {
-    user: userId,
+    userId,
   }
 
   const headers = {

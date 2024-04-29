@@ -71,7 +71,8 @@ export type SearchConfig =
 
 export type User = {
   name: string | null
-  _id?: string | null
+  _id?: string | null // auto created by mongodb
+  userId: string
   history: ImageRecord[]
   favorites: ImageRecord[]
   accountLoading?: boolean

@@ -5,7 +5,7 @@ import { setFavorite } from "../../api/favs"
 
 const initialState: User = {
   name: "",
-  _id: "",
+  userId: "",
   history: [],
   favorites: [],
   accountLoading: false,
@@ -30,10 +30,12 @@ export const userSlice = createAppSlice({
           state.accountLoading = true
         },
         fulfilled: (state, action) => {
-          state.name = action.payload.name
-          state._id = action.payload._id
-          state.history = action.payload.history
-          state.favorites = action.payload.favorites
+          if (action.payload) {
+            state.name = action.payload.name
+            state.userId = action.payload.userId
+            state.history = action.payload.history
+            state.favorites = action.payload.favorites
+          }
           state.accountLoading = false
         },
         rejected: state => {
@@ -70,9 +72,10 @@ export const userSlice = createAppSlice({
   // state as their first argument.
   selectors: {
     selectName: user => user.name,
-    selectId: user => user._id,
+    selectId: user => user.userId,
     selectHistory: user => user.history,
     selectFavorites: user => user.favorites,
+    accountLoading: user => user.accountLoading,
   },
 })
 
@@ -80,5 +83,10 @@ export const userSlice = createAppSlice({
 export const { updateUser, updateFavorites } = userSlice.actions
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
-export const { selectName, selectId, selectHistory, selectFavorites } =
-  userSlice.selectors
+export const {
+  selectName,
+  selectId,
+  selectHistory,
+  selectFavorites,
+  accountLoading,
+} = userSlice.selectors
