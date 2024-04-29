@@ -7,44 +7,44 @@ import Footer from "./components/footer/Footer"
 import styles from "./router.module.css"
 
 function Layout() {
-  return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <Header />
-      </div>
-      <div className={styles.content}>
-        <Outlet />
-      </div>
-      <div className={styles.footer}>
-        <Footer />
-      </div>
-    </div>
-  )
+	return (
+		<div className={styles.container}>
+			<div className={styles.header}>
+				<Header />
+			</div>
+			<div className={styles.content}>
+				<Outlet />
+			</div>
+			<div className={styles.footer}>
+				<Footer />
+			</div>
+		</div>
+	)
 }
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
-      },
-      {
-        path: "search/keyword/:keyword",
-        element: <Search />,
-      },
-      {
-        path: "search/tag/:tag",
-        element: <Search />,
-      },
-    ],
-  },
+	{
+		path: "/",
+		element: <Layout />,
+		children: [
+			{
+				path: "/",
+				element: <Home />,
+			},
+			{
+				path: "profile",
+				element: <Profile />,
+			},
+			{
+				path: "search/keyword/:keyword",
+				element: <Search />,
+			},
+			{
+				path: "search/tag/:tag",
+				element: <Search />,
+			},
+		],
+	},
 ])
 
 export default router

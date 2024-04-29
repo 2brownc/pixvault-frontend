@@ -1,6 +1,6 @@
 export const navigateToKeywordSearch = (keyword: string) => {
-  return `/search/keyword/${keyword}/`
+	return `/search/keyword/${keyword}/`
 }
 export const navigateToTagSearch = (tag: string) => {
-  return `/search/tag/${tag}/`
+	return `/search/tag/${tag}/`
 }

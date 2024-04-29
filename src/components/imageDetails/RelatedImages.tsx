@@ -6,38 +6,39 @@ import type { SearchConfig } from "../../types"
 import { useSearch } from "../../hooks/useSearch"
 
 export function RelatedImages({
-  identifier,
-  limit,
+	identifier,
+	limit,
 }: {
-  identifier: string
-  limit: number
+	identifier: string
+	limit: number
 }) {
-  const searchConfig: SearchConfig = { identifier }
+	const searchConfig: SearchConfig = { identifier }
 
-  const { images, loading, error } = useSearch(searchConfig)
+	const { images, loading, error } = useSearch(searchConfig)
 
-  if (error) {
-    return (
-      <Flex>
-        <div>No Related Images</div>
-      </Flex>
-    )
-  }
+	if (error) {
+		return (
+			<Flex>
+				<div>No Related Images</div>
+			</Flex>
+		)
+	}
 
-  if (loading) {
-    return (
-      <Flex>
-        <Loading width="100%" />
-      </Flex>
-    )
-  }
+	if (loading) {
+		return (
+			<Flex>
+				<Loading width="100%" />
+			</Flex>
+		)
+	}
 
-  return (
-    <ResponsiveMasonry columnsCountBreakPoints={{ 200: 1, 300: 2, 400: 3 }}>
-      <Masonry gutter="15px">
-        {images &&
-          images.slice(0, limit).map(image => <ImageItem image={image} />)}
-      </Masonry>
-    </ResponsiveMasonry>
-  )
+	return (
+		<ResponsiveMasonry columnsCountBreakPoints={{ 200: 1, 300: 2, 400: 3 }}>
+			<Masonry gutter="15px">
+				{images?.slice(0, limit).map((image) => (
+					<ImageItem key={image.id} image={image} />
+				))}
+			</Masonry>
+		</ResponsiveMasonry>
+	)
 }
