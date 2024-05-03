@@ -1,7 +1,7 @@
-import type { Image, ImageRecord } from "../types"
+import type { Image, ImageRecord } from "../types";
 
 export function getImageRecord(image: Image): ImageRecord {
-	const { id, title, thumbnail } = image
+  const { id, title, thumbnail } = image;
 
-	return { id, title, thumbnail, timestamp: new Date() }
+  return { id, title, thumbnail, timestamp: new Date().getTime() / 1000 };
 }
