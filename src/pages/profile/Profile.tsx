@@ -11,8 +11,9 @@ import {
 } from "../../features/user/userSlice";
 import { useState, useEffect, useCallback } from "react";
 import { isRegisteredUser, registerUser } from "../../utils/user";
-import { Container, Text } from "@mantine/core";
+import { Container, Text, Stack } from "@mantine/core";
 import ChangeName from "../../components/ChangeName/ChangeName";
+import ImagePreview from "../../components/PreviewGallery/PreviewGallery";
 
 export default function Profile() {
   const dispatch = useAppDispatch();
@@ -110,8 +111,27 @@ export default function Profile() {
           <ChangeName handleFormSubmit={handleFormSubmit} />
         </Container>
       )}
-
       {isAccountLoading && <div> Loading please wait....</div>}
+
+      {registered && !isAccountLoading && (
+        <div>
+          <h2>Favorites</h2>
+          <div>
+            {userFavorites?.length > 0 ? (
+              <Stack>
+                <Text>Your favorite images.</Text>
+                <ImagePreview images={userFavorites} imageLimit={6} />
+              </Stack>
+            ) : (
+              <Text>
+                You haven't favorited any images yet! What are you waiting for?!
+                Explore an amazing catalog of images and see what you like! Go
+                to search page.
+              </Text>
+            )}
+          </div>
+        </div>
+      )}
     </Container>
   );
 }
