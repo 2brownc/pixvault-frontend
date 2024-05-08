@@ -111,7 +111,7 @@ export default function Profile() {
           <ChangeName handleFormSubmit={handleFormSubmit} />
         </Container>
       )}
-      {isAccountLoading && <div> Loading please wait....</div>}
+      {isAccountLoading && <Loading width="auto" />}
 
       {registered && !isAccountLoading && (
         <div>

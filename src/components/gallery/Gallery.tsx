@@ -12,6 +12,7 @@ import {
 } from "@tabler/icons-react";
 import styles from "./Gallery.module.css";
 import { getImageRecord } from "../../utils/imageRecord";
+import { useEffect } from "react";
 
 type ImageGalleryProps = {
   images: ImageType[] | null;
