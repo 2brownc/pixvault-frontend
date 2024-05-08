@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/loading/Loading";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateUser } from "../../features/user/userSlice";
@@ -14,6 +13,7 @@ import { isRegisteredUser, registerUser } from "../../utils/user";
 import { Container, Text, Stack } from "@mantine/core";
 import ChangeName from "../../components/ChangeName/ChangeName";
 import ImagePreview from "../../components/PreviewGallery/PreviewGallery";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Profile() {
   const dispatch = useAppDispatch();
@@ -21,17 +21,14 @@ export default function Profile() {
   // Get user data from Redux store
   const userName = useAppSelector(selectName);
   const userId = useAppSelector(selectId);
-  const userHistory = useAppSelector(selectHistory);
   const userFavorites = useAppSelector(selectFavorites);
   const isAccountLoading = useAppSelector(accountLoading);
-
-  // Get user data and authentication status from Auth0
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
-    useAuth0();
 
   // State variables to track user registration status
   const [registered, setRegistered] = useState<boolean>(false);
   const [registrationError, setRegistrationError] = useState<boolean>(false);
+
+  const { getAccessTokenSilently } = useAuth0();
 
   // Function to refresh user profile data
   const refreshUserProfile = useCallback(
@@ -43,34 +40,20 @@ export default function Profile() {
     [dispatch, getAccessTokenSilently]
   );
 
-  // Effect hook to check user registration status and refresh user profile data
+  // Check if userId is available and set registered to true
   useEffect(() => {
-    if (!isLoading && isAuthenticated && user) {
-      const authUserId = user?.sub?.split("|")[1];
-      if (authUserId !== undefined) {
-        // Check if user has updated the profile
-        getAccessTokenSilently().then((accessToken) => {
-          isRegisteredUser(authUserId, accessToken).then((result) => {
-            setRegistered(result);
-          });
-        });
-        // Refresh user profile
-        refreshUserProfile(authUserId);
-      }
+    if (userId) {
+      setRegistered(true);
     }
-  }, [
-    isLoading,
-    isAuthenticated,
-    user,
-    getAccessTokenSilently,
-    refreshUserProfile,
-  ]);
 
-  if (isLoading) {
+    setRegistered(false);
+  }, [userId]);
+
+  if (isAccountLoading) {
     return <Loading width="auto" />;
   }
 
-  if (!isAuthenticated) {
+  if (!userId) {
     return <div>Not authenticated :(</div>;
   }
 
@@ -79,14 +62,13 @@ export default function Profile() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget as HTMLFormElement);
     const name = formData.get("name") as string;
-    const authUserId = user?.sub?.split("|")[1];
 
-    if (authUserId && name) {
+    if (userId && name) {
       getAccessTokenSilently().then((accessToken) => {
-        registerUser(authUserId, name, accessToken).then((result) => {
+        registerUser(userId, name, accessToken).then((result) => {
           if (result) {
             // Refresh user profile after successful registration
-            refreshUserProfile(authUserId);
+            refreshUserProfile(userId);
             setRegistered(true);
           } else {
             setRegistrationError(true);

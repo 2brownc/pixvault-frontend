@@ -1,35 +1,56 @@
-import { RouterProvider } from "react-router-dom"
-import { useAuth0 } from "@auth0/auth0-react"
-import router from "./router"
-import { LoadingOverlay, Box } from "@mantine/core"
-import ScrollToTop from "./components/scrollToTop/ScrollToTop"
+import { RouterProvider } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import router from "./router";
+import { LoadingOverlay, Box } from "@mantine/core";
+import ScrollToTop from "./components/scrollToTop/ScrollToTop";
+import { useEffect } from "react";
+import { useAppDispatch } from "./app/hooks";
+import { updateUser } from "./features/user/userSlice";
 
 const App = () => {
-	const { isLoading, error } = useAuth0()
+  const dispatch = useAppDispatch();
+  // Get user, authentication status, loading status, access token getter, and error from useAuth0 hook
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently, error } =
+    useAuth0();
 
-	if (error) {
-		return <div>Oops: Auth0 Error: {error.message}</div>
-	}
+  // When authentication status or user changes, update the Redux store with user ID and access token
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      // Extract user ID from the user object
+      const authUserId = user?.sub?.split("|")[1];
+      if (authUserId) {
+        // Get access token silently and dispatch updateUser action with user ID and access token
+        getAccessTokenSilently().then((accessToken) => {
+          dispatch(updateUser({ userId: authUserId, accessToken }));
+        });
+      }
+    }
+  }, [isAuthenticated, user, getAccessTokenSilently, dispatch]);
 
-	if (isLoading) {
-		return (
-			<Box pos="relative">
-				<LoadingOverlay
-					visible={true}
-					zIndex={1000}
-					overlayProps={{ radius: "sm", blur: 2 }}
-				/>
-				LOADING
-			</Box>
-		)
-	}
+  // If there is an error, display it
+  if (error) {
+    return <div>Oops: Auth0 Error: {error.message}</div>;
+  }
 
-	return (
-		<div>
-			<RouterProvider router={router} />
-			<ScrollToTop />
-		</div>
-	)
-}
+  if (isLoading) {
+    return (
+      <Box pos="relative">
+        <LoadingOverlay
+          visible={true}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
+        LOADING
+      </Box>
+    );
+  }
 
-export default App
+  return (
+    <div>
+      <RouterProvider router={router} />
+      <ScrollToTop />
+    </div>
+  );
+};
+
+export default App;

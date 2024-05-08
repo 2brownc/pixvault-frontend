@@ -15,40 +15,24 @@ import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useImageListScroller } from "../../hooks/useImageListScroller";
 
 export default function Favorites() {
-  // Get user data and authentication status from Auth0
-  // Hook to get user data and authentication status from Auth0
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
-    useAuth0();
-  // State to store access token
+  const { getAccessTokenSilently } = useAuth0();
+
+  // Get user data from Redux store
   const [accessToken, setAccessToken] = useState<string>("");
-  // Get user ID from Redux store
   const userId = useAppSelector(selectId);
-  // Get user favorites from Redux store
   const userFavorites = useAppSelector(selectFavorites);
-  // Get account loading status from Redux store
   const isAccountLoading = useAppSelector(accountLoading);
-  // Get Redux dispatch function
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     getAccessTokenSilently().then((token) => {
-      setAccessToken(token); // Get access token silently and store it in state
+      // Get access token silently and store it in state
+      setAccessToken(token);
     });
   });
 
-  useEffect(() => {
-    // refresh user profile if empty
-    if (accessToken && !userId) {
-      dispatch(updateUser({ userId, accessToken })); // Dispatch action to update user if user ID is empty
-    }
-  }, [userId, accessToken, dispatch]);
-
+  // Hook to handle infinite scrolling of images
   const { images, loadNextPage, hasNextPage, loading, error } =
-    useImageListScroller({ imageRecords: userFavorites, pageSize: 9 }); // Hook to handle infinite scrolling of images
-
-  if (!isAuthenticated) {
-    return <div>Not authenticated :(</div>; // Render message if user is not authenticated
-  }
+    useImageListScroller({ imageRecords: userFavorites, pageSize: 9 });
 
   const [sentryRef] = useInfiniteScroll({
     loading, // Pass loading status to useInfiniteScroll hook
@@ -62,6 +46,10 @@ export default function Favorites() {
     // visible, instead of becoming fully visible on the screen.
     rootMargin: "0px 0px 900px 0px", // Set rootMargin for IntersectionObserver
   });
+
+  if (!userId) {
+    return <div>Not authenticated :(</div>; // Render message if user is not authenticated
+  }
 
   return (
     <Container>
@@ -79,7 +67,7 @@ export default function Favorites() {
             </div>
           </div>
         )}
-        {(isLoading || isAccountLoading || loading) && <Loading width="auto" />}
+        {(isAccountLoading || loading) && <Loading width="auto" />}
       </Box>
     </Container>
   );

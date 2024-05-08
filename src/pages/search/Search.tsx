@@ -9,36 +9,37 @@ import { useSearch } from "../../hooks/useSearch";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useAppDispatch } from "../../app/hooks";
-import { updateUser } from "../../features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { updateUser, selectId } from "../../features/user/userSlice";
 
 export default function Search() {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  // Get access token and user ID from Auth0
+  const { getAccessTokenSilently } = useAuth0();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const userIdAuth = useAppSelector(selectId);
 
+  // Fetch access token and user ID when userIdAuth is available
   useEffect(() => {
-    if (isAuthenticated) {
+    if (userIdAuth) {
       getAccessTokenSilently().then((accessToken) => {
         setAccessToken(accessToken);
-        const userId_local = user?.sub?.split("|")[1];
-        setUserId(userId_local || null);
-        // refresh user profile
-        if (userId_local) {
-          dispatch(updateUser({ userId: userId_local, accessToken }));
-        }
+        setUserId(userIdAuth);
       });
     }
-  }, [isAuthenticated, getAccessTokenSilently, user, dispatch]);
+  }, [getAccessTokenSilently, userIdAuth]);
 
+  // Get keyword and tag from URL parameters
   const { keyword, tag } = useParams();
+  // Use the search hook to fetch images based on keyword, tag, and number of pages
   const { images, loadNextPage, hasNextPage, loading, error } = useSearch({
     keyword: keyword || import.meta.env.VITE_DEFAULT_SEARCHTERM,
     tag,
     pages: 1,
   });
 
+  // Set up infinite scrolling with useInfiniteScroll hook
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage,
@@ -51,6 +52,11 @@ export default function Search() {
     // visible, instead of becoming fully visible on the screen.
     rootMargin: "0px 0px 400px 0px",
   });
+
+  // If user is not authenticated, show a message
+  if (!userIdAuth) {
+    return <div>Not authenticated :(</div>;
+  }
 
   return (
     <Stack>
