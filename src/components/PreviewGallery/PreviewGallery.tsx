@@ -2,20 +2,19 @@ import { Card, Box, Stack, Button } from "@mantine/core";
 import type { ImageRecord } from "../../types";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { SimpleImageItem } from "../imageItem/SimpleImageItem";
-import { useNavigate } from "react-router-dom";
 
 interface ImageCardProps {
   images: ImageRecord[];
   imageLimit: number;
+  handleViewMoreClick: () => void;
 }
 
-export default function PreviewGallery({ images, imageLimit }: ImageCardProps) {
-  const navigate = useNavigate();
+export default function PreviewGallery({
+  images,
+  imageLimit,
+  handleViewMoreClick,
+}: ImageCardProps) {
   const fewImages = images.slice(0, imageLimit);
-
-  const handleViewFavoritesClick = () => {
-    navigate("/favorites");
-  };
 
   return (
     <Card withBorder shadow="md">
@@ -34,11 +33,7 @@ export default function PreviewGallery({ images, imageLimit }: ImageCardProps) {
           </ResponsiveMasonry>
         </Box>
         <Stack gap="md" align="flex-end">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleViewFavoritesClick}
-          >
+          <Button variant="outline" size="sm" onClick={handleViewMoreClick}>
             View All
           </Button>
         </Stack>

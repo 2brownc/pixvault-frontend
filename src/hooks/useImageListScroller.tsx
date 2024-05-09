@@ -40,7 +40,7 @@ export function useImageListScroller({
   }
 
   // Memoized function to update queryList based on page and pageSize
-  useMemo(() => {
+  useEffect(() => {
     if (page) {
       const startAt = pageSize * (page - 1);
       const endAt = pageSize * page;

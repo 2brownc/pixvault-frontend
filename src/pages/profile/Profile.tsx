@@ -14,9 +14,15 @@ import { Container, Text, Stack } from "@mantine/core";
 import ChangeName from "../../components/ChangeName/ChangeName";
 import ImagePreview from "../../components/PreviewGallery/PreviewGallery";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleViewFavoritesClick = () => {
+    navigate("/favorites");
+  };
 
   // Get user data from Redux store
   const userName = useAppSelector(selectName);
@@ -54,8 +60,6 @@ export default function Profile() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget as HTMLFormElement);
     const name = formData.get("name") as string;
-
-    console.log("user sub ", user?.sub?.split("|")[1]);
     const userIdAuth = user?.sub?.split("|")[1] ?? null;
 
     if (userIdAuth && name) {
@@ -111,7 +115,11 @@ export default function Profile() {
             {userFavorites?.length > 0 ? (
               <Stack>
                 <Text>Your favorite images.</Text>
-                <ImagePreview images={userFavorites} imageLimit={6} />
+                <ImagePreview
+                  images={userFavorites}
+                  imageLimit={6}
+                  handleViewMoreClick={handleViewFavoritesClick}
+                />
               </Stack>
             ) : (
               <Text>
