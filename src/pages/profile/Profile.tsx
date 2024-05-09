@@ -28,7 +28,7 @@ export default function Profile() {
   const [registered, setRegistered] = useState<boolean>(false);
   const [registrationError, setRegistrationError] = useState<boolean>(false);
 
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   // Function to refresh user profile data
   const refreshUserProfile = useCallback(
@@ -49,26 +49,21 @@ export default function Profile() {
     }
   }, [userId]);
 
-  if (isAccountLoading) {
-    return <Loading width="auto" />;
-  }
-
-  if (!userId) {
-    return <div>Not authenticated :(</div>;
-  }
-
   // Function to handle form submission for user registration
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget as HTMLFormElement);
     const name = formData.get("name") as string;
 
-    if (userId && name) {
+    console.log("user sub ", user?.sub?.split("|")[1]);
+    const userIdAuth = user?.sub?.split("|")[1] ?? null;
+
+    if (userIdAuth && name) {
       getAccessTokenSilently().then((accessToken) => {
-        registerUser(userId, name, accessToken).then((result) => {
+        registerUser(userIdAuth, name, accessToken).then((result) => {
           if (result) {
             // Refresh user profile after successful registration
-            refreshUserProfile(userId);
+            refreshUserProfile(userIdAuth);
             setRegistered(true);
           } else {
             setRegistrationError(true);
@@ -81,12 +76,21 @@ export default function Profile() {
   return (
     <Container>
       <h1>Profile</h1>
-      <div>
-        {registered && userName && !isAccountLoading && (
-          <div>Hello, {userName}!</div>
-        )}
-      </div>
-      {!registered && registrationError && !isAccountLoading && (
+
+      {/* If user profile is loading */}
+      {isAccountLoading && <Loading width="auto" />}
+
+      {/* If user is not logged in*/}
+      {!user && <Text>Please login to continue.</Text>}
+
+      {/*
+        If user logins for the first time after creating the account
+        invited them to customize their profile by registring a username
+      */}
+      {registered && userName && !isAccountLoading && (
+        <div>Hello, {userName}!</div>
+      )}
+      {user && !registered && !isAccountLoading && (
         <Container size="xs">
           <Text fw={700}>Your account is created.</Text>
           <Text size="lg">Choose a name for your account</Text>
@@ -94,8 +98,12 @@ export default function Profile() {
         </Container>
       )}
 
-      {isAccountLoading && <Loading width="auto" />}
+      {/* When username registration fails */}
+      {registrationError && (
+        <Text>User registration failed! Please try later.</Text>
+      )}
 
+      {/* When user is logged in, registred and user profile is loaded */}
       {registered && !isAccountLoading && (
         <div>
           <h2>Favorites</h2>

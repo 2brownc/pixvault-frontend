@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     if (isAuthenticated && user) {
       // Extract user ID from the user object
-      const authUserId = user?.sub?.split("|")[1];
+      const authUserId = user.sub?.split("|")[1];
       if (authUserId) {
         // Get access token silently and dispatch updateUser action with user ID and access token
         getAccessTokenSilently().then((accessToken) => {
