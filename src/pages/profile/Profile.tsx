@@ -44,9 +44,9 @@ export default function Profile() {
   useEffect(() => {
     if (userId) {
       setRegistered(true);
+    } else {
+      setRegistered(false);
     }
-
-    setRegistered(false);
   }, [userId]);
 
   if (isAccountLoading) {
@@ -86,13 +86,14 @@ export default function Profile() {
           <div>Hello, {userName}!</div>
         )}
       </div>
-      {!registered && !registrationError && !isAccountLoading && (
+      {!registered && registrationError && !isAccountLoading && (
         <Container size="xs">
           <Text fw={700}>Your account is created.</Text>
           <Text size="lg">Choose a name for your account</Text>
           <ChangeName handleFormSubmit={handleFormSubmit} />
         </Container>
       )}
+
       {isAccountLoading && <Loading width="auto" />}
 
       {registered && !isAccountLoading && (
