@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import styles from "./router.module.css";
 import Favorites from "./pages/favorites/Favorites";
+import History from "./pages/history/History";
 
 function Layout() {
   return (
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "favorites",
         element: <Favorites />,
+      },
+      {
+        path: "history",
+        element: <History />,
       },
       {
         path: "search/keyword/:keyword",

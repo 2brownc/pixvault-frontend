@@ -24,10 +24,15 @@ export default function Profile() {
     navigate("/favorites");
   };
 
+  const handleViewHistoryClick = () => {
+    navigate("/history");
+  };
+
   // Get user data from Redux store
   const userName = useAppSelector(selectName);
   const userId = useAppSelector(selectId);
   const userFavorites = useAppSelector(selectFavorites);
+  const userHistory = useAppSelector(selectHistory);
   const isAccountLoading = useAppSelector(accountLoading);
 
   // State variables to track user registration status
@@ -108,6 +113,8 @@ export default function Profile() {
       )}
 
       {/* When user is logged in, registred and user profile is loaded */}
+
+      {/* then show user fav images */}
       {registered && !isAccountLoading && (
         <div>
           <h2>Favorites</h2>
@@ -126,6 +133,31 @@ export default function Profile() {
                 You haven't favorited any images yet! What are you waiting for?!
                 Explore an amazing catalog of images and see what you like! Go
                 to search page.
+              </Text>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* then show user recent images */}
+      {registered && !isAccountLoading && (
+        <div>
+          <h2>Recent Images</h2>
+          <div>
+            {userHistory?.length > 0 ? (
+              <Stack>
+                <Text>Images you viewed recently</Text>
+                <ImagePreview
+                  images={userHistory}
+                  imageLimit={6}
+                  handleViewMoreClick={handleViewHistoryClick}
+                />
+              </Stack>
+            ) : (
+              <Text>
+                You haven't viewed any images yet! What are you waiting for?!
+                Explore an amazing catalog of images and see what you like! Go
+                to the search page.
               </Text>
             )}
           </div>
