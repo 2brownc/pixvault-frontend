@@ -2,7 +2,7 @@ import { Group, Card } from "@mantine/core";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { ImageTags } from "../imageTags/ImageTags";
 import { ImageItem } from "../imageItem/ImageItem";
-import type { Image as ImageType } from "../../types";
+import type { Image as ImageType, ImageId } from "../../types";
 import FavButton from "../favbutton/FavButton";
 import {
   IconHeart,
@@ -12,7 +12,8 @@ import {
 } from "@tabler/icons-react";
 import styles from "./Gallery.module.css";
 import { getImageRecord } from "../../utils/imageRecord";
-import { useEffect } from "react";
+import { useAppSelector } from "../../app/hooks";
+import { selectHistory } from "../../features/user/userSlice";
 
 type ImageGalleryProps = {
   images: ImageType[] | null;
@@ -24,6 +25,7 @@ export default function ImageGallery({
   accessToken,
   userId,
 }: ImageGalleryProps) {
+  const userHistory = useAppSelector(selectHistory);
   // if there are no images to display, return nothing
   if (!images) {
     return <></>;
@@ -46,6 +48,17 @@ export default function ImageGallery({
     );
   };
 
+  const isRecentImage = (image: ImageType) => {
+    if (userId && userHistory) {
+      const isRecent = userHistory.some(
+        (recentImage) => recentImage.id === image.id
+      );
+
+      return isRecent;
+    }
+    return false;
+  };
+
   // filter for normal images
   const imagesFiltered = images.filter((image) => !image.mature);
   // like button color
@@ -66,16 +79,18 @@ export default function ImageGallery({
             >
               <Card.Section>
                 <div className={styles.imageContainer}>
-                  <ImageItem image={image} />
+                  <ImageItem image={image} accessToken={accessToken} />
                   <div className={styles.imageButtons}>
                     <span className={styles.favButton}>
                       {accessToken &&
                         userId &&
                         prepareFavButton(accessToken, userId, image)}
                     </span>
-                    <span className={styles.seen}>
-                      <IconHistory />
-                    </span>
+                    {isRecentImage(image) && (
+                      <span className={styles.seen}>
+                        <IconHistory />
+                      </span>
+                    )}
                     <span className={styles.share}>
                       <IconShare3 />
                     </span>

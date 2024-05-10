@@ -84,7 +84,7 @@ export type User = {
 
 export type UpdateUser = { userId: string; accessToken: string };
 
-export type UpdateFavorites = {
+export type UpdateImage = {
   userId: string;
   imageRecord: ImageRecord;
   accessToken: string;

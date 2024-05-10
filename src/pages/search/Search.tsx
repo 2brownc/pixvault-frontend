@@ -16,19 +16,17 @@ export default function Search() {
   // Get access token and user ID from Auth0
   const { getAccessTokenSilently } = useAuth0();
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const dispatch = useAppDispatch();
-  const userIdAuth = useAppSelector(selectId);
+  const userId = useAppSelector(selectId);
 
-  // Fetch access token and user ID when userIdAuth is available
+  // Fetch access token when available
   useEffect(() => {
-    if (userIdAuth) {
+    if (userId) {
       getAccessTokenSilently().then((accessToken) => {
         setAccessToken(accessToken);
-        setUserId(userIdAuth);
       });
     }
-  }, [getAccessTokenSilently, userIdAuth]);
+  }, [getAccessTokenSilently, userId]);
 
   // Get keyword and tag from URL parameters
   const { keyword, tag } = useParams();
@@ -54,7 +52,7 @@ export default function Search() {
   });
 
   // If user is not authenticated, show a message
-  if (!userIdAuth) {
+  if (!userId) {
     return <div>Not authenticated :(</div>;
   }
 

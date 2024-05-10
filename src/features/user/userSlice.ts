@@ -1,12 +1,12 @@
 import { createAppSlice } from "../../app/createAppSlice";
-import type {
-  User,
-  UpdateUser,
-  UpdateFavorites,
-  ImageRecord,
-} from "../../types";
+import type { User, UpdateUser, UpdateImage, ImageRecord } from "../../types";
 import { getUserProfile } from "../../api/user";
 import { setFavorite, unsetFavorite } from "../../api/favs";
+import {
+  deleteAllRecentImageHistory,
+  setRecentImage,
+  unsetRecentImage,
+} from "../../api/history";
 
 // Initial state for the user slice
 const initialState: User = {
@@ -55,7 +55,7 @@ export const userSlice = createAppSlice({
     ),
     // Async thunk to add a favorite image
     addFavorites: create.asyncThunk(
-      async (payload: UpdateFavorites) => {
+      async (payload: UpdateImage) => {
         const result: boolean = await setFavorite(
           payload.userId,
           payload.imageRecord,
@@ -83,7 +83,7 @@ export const userSlice = createAppSlice({
     ),
     // Async thunk to remove a favorite image
     removeFavorites: create.asyncThunk(
-      async (payload: UpdateFavorites) => {
+      async (payload: UpdateImage) => {
         const result: boolean = await unsetFavorite(
           payload.userId,
           payload.imageRecord.id,
@@ -111,6 +111,88 @@ export const userSlice = createAppSlice({
         },
       }
     ),
+    addRecentImage: create.asyncThunk(
+      async (payload: UpdateImage) => {
+        const result: boolean = await setRecentImage(
+          payload.userId,
+          payload.imageRecord,
+          payload.accessToken
+        );
+        return { result, imageRecord: payload.imageRecord };
+      },
+      {
+        // Set to true while adding a recent image
+        pending: (state) => {
+          state.historyLoading = true;
+        },
+        // Set to false after adding a favorite
+        fulfilled: (state, action) => {
+          if (action.payload.result) {
+            state.history.push(action.payload.imageRecord);
+          }
+          state.historyLoading = false;
+        },
+        // Set to false if adding a image fails
+        rejected: (state) => {
+          state.historyLoading = false;
+        },
+      }
+    ),
+    removeRecentImage: create.asyncThunk(
+      async (payload: UpdateImage) => {
+        const result: boolean = await unsetRecentImage(
+          payload.userId,
+          payload.imageRecord,
+          payload.accessToken
+        );
+        return { result, imageRecord: payload.imageRecord };
+      },
+      {
+        // Set to true while removing a recent image
+        pending: (state) => {
+          state.historyLoading = true;
+        },
+        // Set to false after removing a recent image
+        fulfilled: (state, action) => {
+          if (action.payload.result) {
+            state.history = state.history.filter(
+              (imageRecord) => imageRecord.id !== action.payload.imageRecord.id
+            );
+          }
+          state.historyLoading = false;
+        },
+        // Set to false if removing a image fails
+        rejected: (state) => {
+          state.historyLoading = false;
+        },
+      }
+    ),
+    clearRecentImageHistory: create.asyncThunk(
+      async (payload: UpdateImage) => {
+        const result: boolean = await deleteAllRecentImageHistory(
+          payload.userId,
+          payload.accessToken
+        );
+        return { result, imageRecord: payload.imageRecord };
+      },
+      {
+        // Set to true while removing a recent image history
+        pending: (state) => {
+          state.historyLoading = true;
+        },
+        // Set to false after removing the recnt image history
+        fulfilled: (state, action) => {
+          if (action.payload.result) {
+            state.history = [];
+          }
+          state.historyLoading = false;
+        },
+        // Set to false if removing the recent history fails
+        rejected: (state) => {
+          state.historyLoading = false;
+        },
+      }
+    ),
   }),
   // Selectors to access specific parts of the state
   selectors: {
@@ -123,7 +205,14 @@ export const userSlice = createAppSlice({
 });
 
 // Action creators are generated for each case reducer function.
-export const { updateUser, addFavorites, removeFavorites } = userSlice.actions;
+export const {
+  updateUser,
+  addFavorites,
+  removeFavorites,
+  addRecentImage,
+  removeRecentImage,
+  clearRecentImageHistory,
+} = userSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
 export const {

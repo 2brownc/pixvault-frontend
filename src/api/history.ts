@@ -1,13 +1,13 @@
 import axios from "axios";
 import type { ImageId, ImageRecord } from "../types";
 
-export async function setFavorite(
+export async function setRecentImage(
   userId: string,
   imageRecord: ImageRecord,
   accessToken: string
 ): Promise<boolean> {
   // URI for setFavoriteImage endpoint on server
-  const uri = `${import.meta.env.VITE_SERVER_URL}/setFavoriteImage`;
+  const uri = `${import.meta.env.VITE_SERVER_URL}/images/setRecent`;
 
   // Request headers with auth token
   const headers = {
@@ -23,7 +23,7 @@ export async function setFavorite(
   };
 
   try {
-    // Make POST request to set favorite image
+    // Make POST request to set recent image
     const response = await axios.post(uri, body, { headers });
 
     // Handle 200 response
@@ -39,13 +39,13 @@ export async function setFavorite(
   return false;
 }
 
-export async function unsetFavorite(
+export async function unsetRecentImage(
   userId: string,
-  imageId: ImageId,
+  imageRecord: ImageRecord,
   accessToken: string
 ): Promise<boolean> {
-  // URI for unsetFavoriteImage endpoint on server
-  const uri = `${import.meta.env.VITE_SERVER_URL}/unsetFavoriteImage`;
+  // URI for setFavoriteImage endpoint on server
+  const uri = `${import.meta.env.VITE_SERVER_URL}/images/unsetRecent`;
 
   // Request headers with auth token
   const headers = {
@@ -57,11 +57,11 @@ export async function unsetFavorite(
   // Request body with user ID and image record
   const body = {
     userId,
-    imageId,
+    imageRecord,
   };
 
   try {
-    // Make POST request to set favorite image
+    // Make POST request to remove recent image
     const response = await axios.post(uri, body, { headers });
 
     // Handle 200 response
@@ -70,19 +70,19 @@ export async function unsetFavorite(
     }
   } catch (error) {
     // Log any errors
-    console.error("Error unsetting favorite image:", error);
+    console.error(error);
   }
 
   // Default return value if request fails
   return false;
 }
 
-export async function getFavorites(
+export async function deleteAllRecentImageHistory(
   userId: string,
   accessToken: string
-): Promise<ImageRecord[] | null> {
-  // URI for getFavorites endpoint on server
-  const uri = `${import.meta.env.VITE_SERVER_URL}/getFavoriteImages`;
+): Promise<boolean> {
+  // URI for setFavoriteImage endpoint on server
+  const uri = `${import.meta.env.VITE_SERVER_URL}/images/deleteAllRecentHistory`;
 
   // Request headers with auth token
   const headers = {
@@ -91,23 +91,24 @@ export async function getFavorites(
     "Access-Control-Allow-Origin": "*",
   };
 
+  // Request body with user ID and image record
   const body = {
     userId,
   };
 
   try {
-    // Make POST request to get favorite images
+    // Make POST request to remove all recent image history
     const response = await axios.post(uri, body, { headers });
 
     // Handle 200 response
     if (response.status === 200) {
-      return response.data as ImageRecord[];
+      return true;
     }
   } catch (error) {
     // Log any errors
-    console.error("Error unsetting favorite image:", error);
+    console.error(error);
   }
 
   // Default return value if request fails
-  return null;
+  return false;
 }
