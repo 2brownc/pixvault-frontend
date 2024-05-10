@@ -201,6 +201,8 @@ export const userSlice = createAppSlice({
     selectHistory: (user) => user.history,
     selectFavorites: (user) => user.favorites,
     accountLoading: (user) => user.accountLoading,
+    favoritesLoading: (user) => user.favoritesLoading,
+    historyLoading: (user) => user.historyLoading,
   },
 });
 
@@ -221,4 +223,6 @@ export const {
   selectHistory,
   selectFavorites,
   accountLoading,
+  favoritesLoading,
+  historyLoading,
 } = userSlice.selectors;

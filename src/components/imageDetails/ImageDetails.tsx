@@ -1,16 +1,28 @@
-import { Modal, Button, Table, Space, Divider, Text } from "@mantine/core";
+import {
+  Modal,
+  Button,
+  Table,
+  Space,
+  Divider,
+  Text,
+  Group,
+} from "@mantine/core";
 import type { Image as ImageType, ImageRecord } from "../../types";
 import { RelatedImages } from "./RelatedImages";
-import styles from "./ImageDetails.module.css";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   addRecentImage,
-  removeRecentImage,
+  addFavorites,
+  removeFavorites,
+  selectFavorites,
   selectId,
   selectHistory,
+  favoritesLoading,
 } from "../../features/user/userSlice";
-import { useEffect, useCallback, useMemo } from "react";
+import { useEffect } from "react";
 import { getImageRecord } from "../../utils/imageRecord";
+
+import styles from "./ImageDetails.module.css";
 
 async function handleDownload(imageUrl: string, filename: string) {
   try {
@@ -46,13 +58,43 @@ function ImageDetails({
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectId);
   const history = useAppSelector(selectHistory);
+  const favorites = useAppSelector(selectFavorites);
+  const favoritesStateLoading = useAppSelector(favoritesLoading);
+
+  const imageRecord: ImageRecord = getImageRecord(image);
 
   const addImageToRecents = () => {
     const isRecent = history.some((recentImage) => recentImage.id === image.id);
     if (accessToken && !isRecent) {
-      const imageRecord = getImageRecord(image);
       dispatch(addRecentImage({ imageRecord, userId, accessToken }));
     }
+  };
+
+  const LikeButton = () => {
+    if (!userId || !accessToken) {
+      return <></>;
+    }
+
+    const isLiked = favorites.some((favorite) => favorite.id === image.id);
+    const handleClick = () => {
+      if (isLiked) {
+        dispatch(removeFavorites({ imageRecord, userId, accessToken }));
+      } else {
+        dispatch(addFavorites({ imageRecord, userId, accessToken }));
+      }
+    };
+
+    return (
+      <Button
+        fullWidth
+        onClick={handleClick}
+        loading={favoritesStateLoading}
+        loaderProps={{ type: "dots" }}
+        color="rgb(203,65,84)"
+      >
+        {isLiked ? "Unlike" : "Like"}
+      </Button>
+    );
   };
 
   useEffect(addImageToRecents, []);
@@ -92,14 +134,17 @@ function ImageDetails({
           </Table.Tbody>
         </Table>
         <Space h="md" />
-        <Button
-          fullWidth
-          onClick={() =>
-            handleDownload(image.url, `${image.title}.${image.filetype}`)
-          }
-        >
-          Download
-        </Button>
+        <Group>
+          <LikeButton />
+          <Button
+            fullWidth
+            onClick={() =>
+              handleDownload(image.url, `${image.title}.${image.filetype}`)
+            }
+          >
+            Download
+          </Button>
+        </Group>
         <Divider my="md" />
         <Text size="sm">Realted Images</Text>
         <Space h="lg" />
