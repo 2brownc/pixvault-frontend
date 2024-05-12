@@ -51,11 +51,6 @@ export default function Search() {
     rootMargin: "0px 0px 400px 0px",
   });
 
-  // If user is not authenticated, show a message
-  if (!userId) {
-    return <div>Not authenticated :(</div>;
-  }
-
   return (
     <Stack>
       <Space />
@@ -75,7 +70,11 @@ export default function Search() {
             <div>No Images Found</div>
           </Flex>
         ) : (
-          <Gallery images={images} userId={userId} accessToken={accessToken} />
+          <Gallery
+            images={images}
+            userId={userId ?? null}
+            accessToken={accessToken ?? null}
+          />
         )}
         {loading && <Loading width="100%" />}
       </div>
