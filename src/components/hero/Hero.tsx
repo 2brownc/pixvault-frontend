@@ -3,7 +3,7 @@ import { Logo } from "../../components/logo/Logo";
 import styles from "./Hero.module.css";
 import {
   DemoAccountDetails,
-  LoginInButton,
+  LoginButton,
   SignUpButton,
 } from "../../components/auth/Buttons";
 import { useAppSelector } from "../../app/hooks";
@@ -38,7 +38,7 @@ export default function HeroImageBackground() {
               wrap="wrap"
               gap="md"
             >
-              <LoginInButton />
+              <LoginButton />
 
               <SignUpButton />
 

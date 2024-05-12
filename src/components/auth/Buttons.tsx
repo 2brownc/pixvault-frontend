@@ -1,7 +1,25 @@
 import { Button } from "@mantine/core";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export function LoginInButton() {
+export function LoginButtonUnstyled({
+  component,
+}: {
+  component: "symbol" | undefined;
+}) {
+  const { loginWithRedirect } = useAuth0();
+
+  return (
+    <Button
+      w={{ base: "200px", md: "auto" }}
+      onClick={() => loginWithRedirect()}
+      component={component}
+    >
+      Login In
+    </Button>
+  );
+}
+
+export function LoginButton() {
   const { loginWithRedirect } = useAuth0();
 
   return (
