@@ -7,6 +7,7 @@ import Footer from "./components/footer/Footer";
 import styles from "./router.module.css";
 import Favorites from "./pages/favorites/Favorites";
 import History from "./pages/history/History";
+import DemoAccountDetails from "./pages/demoAccountDetails/DemoAccountDetails";
 
 function Layout() {
   return (
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "history",
         element: <History />,
+      },
+      {
+        path: "demoaccount",
+        element: <DemoAccountDetails />,
       },
       {
         path: "search/keyword/:keyword",
