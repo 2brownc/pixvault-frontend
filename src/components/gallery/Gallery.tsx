@@ -4,16 +4,12 @@ import { ImageTags } from "../imageTags/ImageTags";
 import { ImageItem } from "../imageItem/ImageItem";
 import type { Image as ImageType, ImageId } from "../../types";
 import FavButton from "../favbutton/FavButton";
-import {
-  IconHeart,
-  IconHeartFilled,
-  IconHistory,
-  IconShare3,
-} from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled, IconHistory } from "@tabler/icons-react";
 import styles from "./Gallery.module.css";
 import { getImageRecord } from "../../utils/imageRecord";
 import { useAppSelector } from "../../app/hooks";
 import { selectHistory } from "../../features/user/userSlice";
+import { ShareImage } from "../shareImage/ShareImage";
 
 type ImageGalleryProps = {
   images: ImageType[] | null;
@@ -26,6 +22,7 @@ export default function ImageGallery({
   userId,
 }: ImageGalleryProps) {
   const userHistory = useAppSelector(selectHistory);
+
   // if there are no images to display, return nothing
   if (!images) {
     return <></>;
@@ -92,7 +89,7 @@ export default function ImageGallery({
                       </span>
                     )}
                     <span className={styles.share}>
-                      <IconShare3 />
+                      <ShareImage image={image} />
                     </span>
                   </div>
                 </div>

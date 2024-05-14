@@ -12,7 +12,11 @@ export function ImageItem({
   image: ImageType;
   accessToken: string | null;
 }) {
-  const [opened, { open, close }] = useDisclosure(false);
+  const [
+    openedImageDetails,
+    { open: openImageDetails, close: closeImageDetails },
+  ] = useDisclosure(false);
+
   const { hovered, ref } = useHover<HTMLImageElement>();
 
   return (
@@ -28,14 +32,14 @@ export function ImageItem({
             cursor: hovered ? "pointer" : "auto",
             transition: "all 0.5s ease",
           }}
-          onClick={open}
+          onClick={openImageDetails}
           fit="contain"
         />
       </div>
       <ImageDetailsModal
         image={image}
-        opened={opened}
-        close={close}
+        opened={openedImageDetails}
+        close={closeImageDetails}
         accessToken={accessToken}
       />
     </>
