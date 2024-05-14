@@ -32,7 +32,7 @@ export default function Search() {
   const { keyword, tag } = useParams();
   // Use the search hook to fetch images based on keyword, tag, and number of pages
   const { images, loadNextPage, hasNextPage, loading, error } = useSearch({
-    keyword: keyword || import.meta.env.VITE_DEFAULT_SEARCHTERM,
+    keyword: keyword ?? (tag ? null : import.meta.env.VITE_DEFAULT_SEARCHTERM),
     tag,
     pages: 1,
   });

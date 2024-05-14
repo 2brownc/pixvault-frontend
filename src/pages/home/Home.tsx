@@ -26,7 +26,7 @@ export default function Home() {
   }, [getAccessTokenSilently, userId]);
 
   const { images, loadNextPage, hasNextPage, loading, error } = useSearch({
-    keyword: "scenery|scenic",
+    keyword: import.meta.env.VITE_HOME_SEARCHTERM,
     pages: 1,
   });
 
