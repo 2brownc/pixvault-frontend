@@ -21,6 +21,7 @@ import {
 } from "../../features/user/userSlice";
 import { useEffect } from "react";
 import { getImageRecord } from "../../utils/imageRecord";
+import { ShareMenu } from "../shareImage/ShareMenu";
 
 import styles from "./ImageDetails.module.css";
 
@@ -144,6 +145,7 @@ function ImageDetails({
           >
             Download
           </Button>
+          <ShareMenu image={image} />
         </Group>
         <Divider my="md" />
         <Text size="sm">Realted Images</Text>
