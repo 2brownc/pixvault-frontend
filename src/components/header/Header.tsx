@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Logo } from "../logo/Logo";
 import { isCurrentPage } from "../../utils/navigation";
+import { resetState } from "../../features/user/userSlice";
+import { useAppDispatch } from "../../app/hooks";
 
 const links = [
   { link: "/", label: "Home" },
@@ -31,8 +33,10 @@ export default function Header() {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const logoutAction = () => {
+    dispatch(resetState(""));
     logout({ logoutParams: { returnTo: window.location.origin } });
   };
 

@@ -216,6 +216,16 @@ export const userSlice = createAppSlice({
         },
       }
     ),
+    resetState: create.asyncThunk(
+      async () => {
+        return true;
+      },
+      {
+        fulfilled: (state) => {
+          Object.assign(state, initialState);
+        },
+      }
+    ),
   }),
   // Selectors to access specific parts of the state
   selectors: {
@@ -242,6 +252,7 @@ export const {
   addRecentImage,
   removeRecentImage,
   clearRecentImageHistory,
+  resetState,
 } = userSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.

@@ -6,6 +6,7 @@ import {
   Divider,
   Text,
   Group,
+  Image,
 } from "@mantine/core";
 import type { Image as ImageType, ImageRecord } from "../../types";
 import { RelatedImages } from "./RelatedImages";
@@ -103,7 +104,7 @@ function ImageDetails({
   return (
     <div className={styles.modalContainer}>
       <div className={styles.imageContainer}>
-        <img src={image.url} alt={image.title} />
+        <Image src={image.url} />
       </div>
       <div className={styles.infoContainer}>
         <Table style={{ textAlign: "center" }}>

@@ -10,7 +10,7 @@ import {
 } from "../../features/user/userSlice";
 import { useState, useEffect, useCallback } from "react";
 import { registerUser } from "../../utils/user";
-import { Container, Text, Stack } from "@mantine/core";
+import { Container, Text, Stack, Box, Button } from "@mantine/core";
 import ChangeName from "../../components/ChangeName/ChangeName";
 import ImagePreview from "../../components/PreviewGallery/PreviewGallery";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -60,6 +60,11 @@ export default function Profile() {
     }
   }, [userId]);
 
+  // if the user is not authenticated redirect to home page
+  if (!userId) {
+    navigate("/");
+  }
+
   // Function to handle form submission for user registration
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -80,6 +85,16 @@ export default function Profile() {
         });
       });
     }
+  };
+
+  const SearchButton = () => {
+    const link = `/search/keyword/${import.meta.env.VITE_DEFAULT_SEARCHTERM}`;
+
+    return (
+      <Button variant="transparent" onClick={() => navigate(link)}>
+        Go search for images you like!
+      </Button>
+    );
   };
 
   return (
@@ -129,11 +144,14 @@ export default function Profile() {
                 />
               </Stack>
             ) : (
-              <Text>
-                You haven't favorited any images yet! What are you waiting for?!
-                Explore an amazing catalog of images and see what you like! Go
-                to search page.
-              </Text>
+              <Stack>
+                <Text>
+                  You haven't favorited any images yet! What are you waiting
+                  for?! Explore an amazing catalog of images and see what you
+                  like! Go to search page.
+                </Text>
+                <SearchButton />
+              </Stack>
             )}
           </div>
         </div>
@@ -154,11 +172,14 @@ export default function Profile() {
                 />
               </Stack>
             ) : (
-              <Text>
-                You haven't viewed any images yet! What are you waiting for?!
-                Explore an amazing catalog of images and see what you like! Go
-                to the search page.
-              </Text>
+              <Stack>
+                <Text>
+                  You haven't viewed any images yet! What are you waiting for?!
+                  Explore an amazing catalog of images and see what you like! Go
+                  to the search page.
+                </Text>
+                <SearchButton />
+              </Stack>
             )}
           </div>
         </div>

@@ -9,14 +9,16 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../components/loading/Loading";
 import ImageGallery from "../../components/gallery/Gallery";
-import { Container, Box, Button, Flex } from "@mantine/core";
+import { Container, Box, Button, Flex, Text } from "@mantine/core";
 import { useState, useEffect } from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useImageListScroller } from "../../hooks/useImageListScroller";
+import { useNavigate } from "react-router-dom";
 
 export default function History() {
   const { getAccessTokenSilently } = useAuth0();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // Get user data from Redux store
   const [accessToken, setAccessToken] = useState<string>("");
@@ -52,9 +54,20 @@ export default function History() {
     dispatch(clearRecentImageHistory({ userId, accessToken }));
   };
 
+  // if the user is not authenticated redirect to home page
   if (!userId) {
-    return <div>Not authenticated :(</div>; // Render message if user is not authenticated
+    navigate("/");
   }
+
+  const SearchButton = () => {
+    const link = `/search/keyword/${import.meta.env.VITE_DEFAULT_SEARCHTERM}`;
+
+    return (
+      <Button variant="subtle" onClick={() => navigate(link)}>
+        Go search for images you like!
+      </Button>
+    );
+  };
 
   if (userHistory?.length === 0) {
     return (
@@ -63,10 +76,11 @@ export default function History() {
         gap="md"
         justify="center"
         align="center"
-        direction="row"
+        direction="column"
         wrap="wrap"
       >
-        You haven't viewed any images recently. Go search for images you like!
+        <Text>You haven't viewed any images recently.</Text>
+        <SearchButton />
       </Flex>
     ); // Render message if user has no history
   }
