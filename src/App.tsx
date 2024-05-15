@@ -6,6 +6,9 @@ import ScrollToTop from "./components/scrollToTop/ScrollToTop";
 import { useEffect } from "react";
 import { useAppDispatch } from "./app/hooks";
 import { updateUser } from "./features/user/userSlice";
+import NotificationCenter from "./components/notification/NotificationCenter";
+
+import styles from "./App.module.css";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +52,7 @@ const App = () => {
     <div>
       <RouterProvider router={router} />
       <ScrollToTop />
+      <NotificationCenter />
     </div>
   );
 };

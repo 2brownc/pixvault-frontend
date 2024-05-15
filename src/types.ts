@@ -67,7 +67,7 @@ export type SearchConfig =
     }
   | { identifier: string };
 
-// MONGODB
+// APP STATE
 
 export type User = {
   name: string | null;
@@ -78,9 +78,10 @@ export type User = {
   accountLoading?: boolean;
   historyLoading?: boolean;
   favoritesLoading?: boolean;
+  accountAction?: string | null;
+  historyAction?: string | null;
+  favoritesAction?: string | null;
 };
-
-// APP STATE
 
 export type UpdateUser = { userId: string; accessToken: string };
 

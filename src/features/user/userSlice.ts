@@ -17,6 +17,9 @@ const initialState: User = {
   accountLoading: false,
   historyLoading: false,
   favoritesLoading: false,
+  accountAction: null,
+  historyAction: null,
+  favoritesAction: null,
 };
 
 export const userSlice = createAppSlice({
@@ -36,6 +39,7 @@ export const userSlice = createAppSlice({
         // Set accountLoading to true while fetching user data
         pending: (state) => {
           state.accountLoading = true;
+          state.accountAction = "Loading User Profile";
         },
         // Set accountLoading to false after fetching user data
         fulfilled: (state, action) => {
@@ -46,10 +50,12 @@ export const userSlice = createAppSlice({
             state.favorites = action.payload.favorites;
           }
           state.accountLoading = false;
+          state.accountAction = "Loaded User Profile";
         },
         // Set accountLoading to false if fetching user data fails
         rejected: (state) => {
           state.accountLoading = false;
+          state.accountAction = "Failed to Load User Profile";
         },
       }
     ),
@@ -67,6 +73,7 @@ export const userSlice = createAppSlice({
         // Set favoritesLoading to true while adding a favorite
         pending: (state) => {
           state.favoritesLoading = true;
+          state.favoritesAction = "Adding Favorite";
         },
         // Set favoritesLoading to false after adding a favorite
         fulfilled: (state, action) => {
@@ -74,10 +81,12 @@ export const userSlice = createAppSlice({
             state.favorites.push(action.payload.imageRecord);
           }
           state.favoritesLoading = false;
+          state.favoritesAction = "Added Favorite";
         },
         // Set favoritesLoading to false if adding a favorite fails
         rejected: (state) => {
           state.favoritesLoading = false;
+          state.favoritesAction = "Failed to Add Favorite";
         },
       }
     ),
@@ -95,6 +104,7 @@ export const userSlice = createAppSlice({
         // Set favoritesLoading to true while removing a favorite
         pending: (state) => {
           state.favoritesLoading = true;
+          state.favoritesAction = "Removing Favorite";
         },
         // Set favoritesLoading to false after removing a favorite
         fulfilled: (state, action) => {
@@ -104,10 +114,12 @@ export const userSlice = createAppSlice({
             );
           }
           state.favoritesLoading = false;
+          state.favoritesAction = "Removed Favorite";
         },
         // Set favoritesLoading to false if removing a favorite fails
         rejected: (state) => {
           state.favoritesLoading = false;
+          state.favoritesAction = "Failed to Remove Favorite";
         },
       }
     ),
@@ -124,6 +136,7 @@ export const userSlice = createAppSlice({
         // Set to true while adding a recent image
         pending: (state) => {
           state.historyLoading = true;
+          state.historyAction = "Adding Recent Image";
         },
         // Set to false after adding a favorite
         fulfilled: (state, action) => {
@@ -131,10 +144,12 @@ export const userSlice = createAppSlice({
             state.history.push(action.payload.imageRecord);
           }
           state.historyLoading = false;
+          state.historyAction = "Added Recent Image";
         },
         // Set to false if adding a image fails
         rejected: (state) => {
           state.historyLoading = false;
+          state.historyAction = "Failed to Add Recent Image";
         },
       }
     ),
@@ -151,6 +166,7 @@ export const userSlice = createAppSlice({
         // Set to true while removing a recent image
         pending: (state) => {
           state.historyLoading = true;
+          state.historyAction = "Removing Recent Image";
         },
         // Set to false after removing a recent image
         fulfilled: (state, action) => {
@@ -160,10 +176,12 @@ export const userSlice = createAppSlice({
             );
           }
           state.historyLoading = false;
+          state.historyAction = "Removed Recent Image";
         },
         // Set to false if removing a image fails
         rejected: (state) => {
           state.historyLoading = false;
+          state.historyAction = "Failed to Remove Recent Image";
         },
       }
     ),
@@ -179,6 +197,7 @@ export const userSlice = createAppSlice({
         // Set to true while removing a recent image history
         pending: (state) => {
           state.historyLoading = true;
+          state.historyAction = "Clearing Recent Image History";
         },
         // Set to false after removing the recnt image history
         fulfilled: (state, action) => {
@@ -186,10 +205,12 @@ export const userSlice = createAppSlice({
             state.history = [];
           }
           state.historyLoading = false;
+          state.historyAction = "Cleared Recent Image History";
         },
         // Set to false if removing the recent history fails
         rejected: (state) => {
           state.historyLoading = false;
+          state.historyAction = "Failed to Clear Recent Image History";
         },
       }
     ),
@@ -203,6 +224,9 @@ export const userSlice = createAppSlice({
     accountLoading: (user) => user.accountLoading,
     favoritesLoading: (user) => user.favoritesLoading,
     historyLoading: (user) => user.historyLoading,
+    accountAction: (user) => user.accountAction,
+    historyAction: (user) => user.historyAction,
+    favoritesAction: (user) => user.favoritesAction,
   },
 });
 
@@ -225,4 +249,7 @@ export const {
   accountLoading,
   favoritesLoading,
   historyLoading,
+  accountAction,
+  historyAction,
+  favoritesAction,
 } = userSlice.selectors;
