@@ -1,5 +1,5 @@
 import { createAppSlice } from "../../app/createAppSlice";
-import type { User, UpdateUser, UpdateImage, ImageRecord } from "../../types";
+import type { User, UpdateUser, UpdateImage, ClearHistory } from "../../types";
 import { getUserProfile } from "../../api/user";
 import { setFavorite, unsetFavorite } from "../../api/favs";
 import {
@@ -16,9 +16,11 @@ const initialState: User = {
   favorites: [],
   accountLoading: false,
   historyLoading: false,
+  allHistoryLoading: false,
   favoritesLoading: false,
   accountAction: null,
   historyAction: null,
+  allHistoryAction: null,
   favoritesAction: null,
 };
 
@@ -186,31 +188,31 @@ export const userSlice = createAppSlice({
       }
     ),
     clearRecentImageHistory: create.asyncThunk(
-      async (payload: UpdateImage) => {
+      async (payload: ClearHistory) => {
         const result: boolean = await deleteAllRecentImageHistory(
           payload.userId,
           payload.accessToken
         );
-        return { result, imageRecord: payload.imageRecord };
+        return { result, imageRecord: [] };
       },
       {
         // Set to true while removing a recent image history
         pending: (state) => {
-          state.historyLoading = true;
-          state.historyAction = "Clearing Recent Image History";
+          state.allHistoryLoading = true;
+          state.allHistoryAction = "Clearing Recent Image History";
         },
         // Set to false after removing the recnt image history
         fulfilled: (state, action) => {
           if (action.payload.result) {
             state.history = [];
           }
-          state.historyLoading = false;
-          state.historyAction = "Cleared Recent Image History";
+          state.allHistoryLoading = false;
+          state.allHistoryAction = "Cleared Recent Image History";
         },
         // Set to false if removing the recent history fails
         rejected: (state) => {
-          state.historyLoading = false;
-          state.historyAction = "Failed to Clear Recent Image History";
+          state.allHistoryLoading = false;
+          state.allHistoryAction = "Failed to Clear Recent Image History";
         },
       }
     ),
@@ -224,8 +226,10 @@ export const userSlice = createAppSlice({
     accountLoading: (user) => user.accountLoading,
     favoritesLoading: (user) => user.favoritesLoading,
     historyLoading: (user) => user.historyLoading,
+    allHistoryLoading: (user) => user.allHistoryLoading,
     accountAction: (user) => user.accountAction,
     historyAction: (user) => user.historyAction,
+    allHistoryAction: (user) => user.allHistoryAction,
     favoritesAction: (user) => user.favoritesAction,
   },
 });
@@ -249,7 +253,9 @@ export const {
   accountLoading,
   favoritesLoading,
   historyLoading,
+  allHistoryLoading,
   accountAction,
   historyAction,
   favoritesAction,
+  allHistoryAction,
 } = userSlice.selectors;

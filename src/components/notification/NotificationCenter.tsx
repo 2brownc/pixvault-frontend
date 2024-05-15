@@ -2,11 +2,10 @@ import Notifier from "./Notifier";
 import { Box, Stack } from "@mantine/core";
 import { useAppSelector } from "../../app/hooks";
 import {
-  updateUser,
   accountLoading,
   favoritesLoading,
-  historyLoading,
-  historyAction,
+  allHistoryLoading,
+  allHistoryAction,
   favoritesAction,
   accountAction,
 } from "../../features/user/userSlice";
@@ -16,8 +15,8 @@ import styles from "./NotificationCenter.module.css";
 export default function NotificationCenter() {
   const isAccountLoading = useAppSelector(accountLoading);
   const isFavoriteLoading = useAppSelector(favoritesLoading);
-  const isHistoryLoading = useAppSelector(historyLoading);
-  const historyStatus = useAppSelector(historyAction);
+  const isAllHistoryLoading = useAppSelector(allHistoryLoading);
+  const allHistoryStatus = useAppSelector(allHistoryAction);
   const favoritesStatus = useAppSelector(favoritesAction);
   const accountStatus = useAppSelector(accountAction);
   return (
@@ -29,11 +28,15 @@ export default function NotificationCenter() {
       align="flex-end"
       justify="flex-end"
     >
-      <Notifier isLoading={isAccountLoading} notificationText={accountStatus} />
       <Notifier
         isLoading={isFavoriteLoading}
         notificationText={favoritesStatus}
       />
+      <Notifier
+        isLoading={isAllHistoryLoading}
+        notificationText={allHistoryStatus}
+      />
+      <Notifier isLoading={isAccountLoading} notificationText={accountStatus} />
     </Stack>
   );
 }

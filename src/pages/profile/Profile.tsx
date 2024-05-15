@@ -9,7 +9,7 @@ import {
   accountLoading,
 } from "../../features/user/userSlice";
 import { useState, useEffect, useCallback } from "react";
-import { isRegisteredUser, registerUser } from "../../utils/user";
+import { registerUser } from "../../utils/user";
 import { Container, Text, Stack } from "@mantine/core";
 import ChangeName from "../../components/ChangeName/ChangeName";
 import ImagePreview from "../../components/PreviewGallery/PreviewGallery";

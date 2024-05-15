@@ -77,9 +77,11 @@ export type User = {
   favorites: ImageRecord[];
   accountLoading?: boolean;
   historyLoading?: boolean;
+  allHistoryLoading?: boolean;
   favoritesLoading?: boolean;
   accountAction?: string | null;
   historyAction?: string | null;
+  allHistoryAction?: string | null;
   favoritesAction?: string | null;
 };
 
@@ -88,5 +90,10 @@ export type UpdateUser = { userId: string; accessToken: string };
 export type UpdateImage = {
   userId: string;
   imageRecord: ImageRecord;
+  accessToken: string;
+};
+
+export type ClearHistory = {
+  userId: string;
   accessToken: string;
 };
