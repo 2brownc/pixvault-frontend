@@ -1,44 +1,55 @@
-.modalContainer {
-  display: flex; /* Use flexbox for flexible layout */
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-}
-
-.imageContainer {
-  width: 79vw;
+.container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  flex-direction: column;
+  gap: 0;
+  width: 100vw;
+  min-height: 95vh;
+  margin: 0;
+  padding: 0;
 }
 
-.imageContainer img {
+.img {
+  max-height: 85vh;
+  margin: 0;
+  padding: 2em;
   object-fit: contain;
-  max-width: 75vw;
-  max-height: 90vh;
 }
 
 .infoContainer {
-  width: 19vw;
+  margin: 0;
+  padding: 0;
 }
 
-/* Small screens */
+.info {
+  max-width: 14em;
+}
 
-@media (max-width: 650px) {
-  .modalContainer {
-    flex-direction: column;
+@media (min-width: 65em) {
+  .container {
+    flex-direction: row;
   }
 
-  .imageContainer {
-    width: 95vw;
-  }
-
-  .imageContainer img {
-    max-width: 93vw;
+  .img {
+    flex-shrink: 4;
   }
 
   .infoContainer {
-    width: 95vw;
+    flex-shrink: 1;
+  }
+}
+
+@media (min-width: 75em) {
+  .container {
+    flex-direction: row;
+  }
+
+  .img {
+    flex-shrink: 2;
+  }
+
+  .infoContainer {
+    flex-shrink: 1;
   }
 }
