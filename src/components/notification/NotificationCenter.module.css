@@ -1,8 +1,8 @@
 .notificationContainer {
   z-index: 900;
   position: fixed;
-  bottom: 6vh;
-  right: 3vw;
+  bottom: 9vh;
+  right: 1vw;
   height: auto;
   width: auto;
 }
