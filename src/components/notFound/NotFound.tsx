@@ -7,8 +7,8 @@ const NotFound: React.FC = () => {
     navigate("/");
   };
   return (
-    <Container h="90vh">
-      <Stack align="center" justify="center" h="70vh">
+    <Container h="50vh">
+      <Stack align="center" justify="center" h="50vh">
         <Title>404 - Page Not Found</Title>
         <Text>The page you requested could not be found.</Text>
         <Button onClick={handleGoToHomePage}>Go to Home Page</Button>
