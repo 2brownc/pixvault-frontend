@@ -18,13 +18,13 @@ This is the frontend repo. Check out the [backend repo](https://github.com/2brow
 2. **Clone the Repository:** Open your terminal and navigate to your desired project directory. Then, run the following command to clone this repository:
 
    ```bash
-   git clone https://github.com/2brownc/pixvault-backend.git
+   git clone https://github.com/2brownc/pixvault-frontend.git
    ```
 
 3. **Install Dependencies:** Navigate to the project directory and install the required dependencies using npm:
 
    ```bash
-   cd pixvault
+   cd pixvault-frontend
    npm install
    ```
 
@@ -42,7 +42,7 @@ This is the frontend repo. Check out the [backend repo](https://github.com/2brow
 
    VITE_DEMO_EMAIL
    VITE_DEMO_PASS
-   
+
    VITE_SERVER_URL  #backend server url
    VITE_SERVER_CROSS_ORIGIN #same as server url if on same domain, else set to '*'
    ```
