@@ -78,7 +78,6 @@ export async function getUserProfile(userId: string, accessToken: string) {
     const response = await axios.post(uri, body, { headers });
     return response.data;
   } catch (error) {
-    // if user is not found, return null
     return null;
   }
 }
