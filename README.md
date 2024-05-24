@@ -4,6 +4,38 @@ Pixvault is a robust stock image website built with the MERN stack (MongoDB, Exp
 
 This is the frontend repo. Check out the [backend repo](https://github.com/2brownc/pixvault-backend).
 
+**Gallery:**
+
+Landing Page  
+![Landing Page](screenshots/pv.home.jpg)
+
+Login  
+![Login](screenshots/pv.login.jpg)
+
+Search  
+![Search](screenshots/pv.search.jpg)
+
+Image View  
+![Image View](screenshots/pv.image.view.jpg)
+
+Share Menu  
+![Share Menu](screenshots/pv.share.menu.jpg)
+
+Infinite Scroll  
+![Infinite Scroll](screenshots/pv.infinite.scroll.jpg)
+
+Thumbnail View  
+![Thumbnail View](screenshots/pv.thumbnail.view.jpg)
+
+Profile  
+![Profile](screenshots/pv.profile.jpg)
+
+Favorites  
+![Favorites](screenshots/pv.favorites.jpg)
+
+History  
+![History](screenshots/pv.history.jpg)
+
 **Key Features:**
 
 - **CRUD Functionality:** Create, Read, Update, and Delete images, allowing for comprehensive image management.
