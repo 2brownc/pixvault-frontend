@@ -1,6 +1,6 @@
 # Pixvault: A MERN Stock Image Website
 
-- [Visit Pixvault](https://pixvault.pages.dev/)
+- [Open Pixvault App](https://pixvault.pages.dev/ target="\_blank")
 
 Pixvault is a robust stock image website built with the MERN stack (MongoDB, Express, React, and Node.js) for a seamless user experience. It empowers users to view, manage, and download images, making it ideal for designers, bloggers, and anyone seeking exceptional visuals.
 
