@@ -7,34 +7,34 @@ This is the frontend repo. Check out the [backend repo](https://github.com/2brow
 **Gallery:**
 
 Landing Page  
-![Landing Page](screenshots/pv.home.jpg)
+![Landing Page](screenshots/pv.home.png)
 
 Login  
-![Login](screenshots/pv.login.jpg)
+![Login](screenshots/pv.login.png)
 
 Search  
-![Search](screenshots/pv.search.jpg)
+![Search](screenshots/pv.search.png)
 
 Image View  
-![Image View](screenshots/pv.image.view.jpg)
+![Image View](screenshots/pv.image.view.png)
 
 Share Menu  
-![Share Menu](screenshots/pv.share.menu.jpg)
+![Share Menu](screenshots/pv.share.menu.png)
 
 Infinite Scroll  
-![Infinite Scroll](screenshots/pv.infinite.scroll.jpg)
+![Infinite Scroll](screenshots/pv.infinite.scroll.png)
 
 Thumbnail View  
-![Thumbnail View](screenshots/pv.thumbnail.view.jpg)
+![Thumbnail View](screenshots/pv.thumbnail.view.png)
 
 Profile  
-![Profile](screenshots/pv.profile.jpg)
+![Profile](screenshots/pv.profile.png)
 
 Favorites  
-![Favorites](screenshots/pv.favorites.jpg)
+![Favorites](screenshots/pv.favorites.png)
 
 History  
-![History](screenshots/pv.history.jpg)
+![History](screenshots/pv.history.png)
 
 **Key Features:**
 
