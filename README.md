@@ -22,7 +22,7 @@ This is the frontend repo. Check out the [backend repo](https://github.com/2brow
 
 **REST API Interaction:**
 
-The communication between frontend and backend follows the REST architectural style. This means requests adhere to standard HTTP verbs like GET, POST, PUT, and DELETE.
+The communication between frontend and backend follows the REST architectural style.
 
 ## Gallery
 
@@ -56,7 +56,7 @@ Favorites
 History  
 ![History](screenshots/pv.history.png)
 
-# Key Features
+## Key Features
 
 - **REST API:** Frontend and backend communicate following the REST API architectural style.
 - **Secure Authentication:** Leverages Auth0 for secure user login and authorization, ensuring data privacy and trust.
