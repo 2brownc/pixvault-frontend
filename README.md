@@ -4,7 +4,7 @@
 
 Pixvault is a robust stock image website built with the MERN stack (MongoDB, Express, React, and Node.js) for a seamless user experience. It empowers users to view, manage, and download images, making it ideal for designers, bloggers, and anyone seeking exceptional visuals.
 
-This is the frontend repo. Check out the [backend repo](https://github.com/2brownc/pixvault-backend).
+**This is the frontend repo.** Check out the [backend repo](/2brownc/pixvault-backend).
 
 **Frontend (React):**
 
@@ -60,15 +60,15 @@ History
 
 ## Key Features
 
-- **REST API:** Frontend and backend communicate following the REST API architectural style.
-- **Secure Authentication:** Leverages Auth0 for secure user login and authorization, ensuring data privacy and trust.
 - **Typescript:** Enhances code maintainability, type safety, and developer experience.
+- **Secure Authentication:** Leverages Auth0 for secure user login and authorization, ensuring data privacy and trust.
 - **React Redux State Management:** Provides a centralized state management solution for a predictable and efficient user interface.
 - **Mantine UI Integration:** Offers a modern and responsive design framework for an intuitive user experience.
 
 ## Getting Started
 
 1. **Prerequisites:** Node.js (version 18 or later) and npm (Node Package Manager) are required. You can download them from the official Node.js website: [https://nodejs.org/en](https://nodejs.org/en).
+
 2. **Clone the Repository:** Open your terminal and navigate to your desired project directory. Then, run the following command to clone this repository:
 
    ```bash
