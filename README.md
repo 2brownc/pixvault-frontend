@@ -4,7 +4,7 @@
 
 Pixvault is a robust stock image website built with the MERN stack (MongoDB, Express, React, and Node.js) for a seamless user experience. It empowers users to view, manage, and download images, making it ideal for designers, bloggers, and anyone seeking exceptional visuals.
 
-**This is the frontend repo.** Check out the [backend repo](/2brownc/pixvault-backend).
+**This is the frontend repo.** Check out the [backend repo](https://github.com/2brownc/pixvault-backend).
 
 **Frontend (React):**
 
